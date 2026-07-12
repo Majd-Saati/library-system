@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { books, type Book } from '../data/books'
+import { books } from '../data/books'
 import { BookCard } from '../components/BookCard'
 import { BookSearch } from '../components/BookSearch'
 import { useBookSearch } from '../hooks/useBookSearch'
@@ -9,7 +8,6 @@ import { useBookSearch } from '../hooks/useBookSearch'
 export function HomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [notice, setNotice] = useState<string | null>(null)
   const {
     query,
     setQuery,
@@ -18,23 +16,6 @@ export function HomePage() {
     clearQuery,
     hasQuery,
   } = useBookSearch(books)
-
-  function showNotice(message: string) {
-    setNotice(message)
-    window.setTimeout(() => setNotice(null), 2500)
-  }
-
-  function handleBuy(book: Book) {
-    showNotice(t('book.purchaseStarted', { title: book.title }))
-  }
-
-  function handleBorrow(book: Book) {
-    showNotice(t('book.borrowStarted', { title: book.title }))
-  }
-
-  function handleSelectSuggestion(book: Book) {
-    navigate(`/book/${book.id}`)
-  }
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -55,7 +36,7 @@ export function HomePage() {
           query={query}
           suggestions={suggestions}
           onQueryChange={setQuery}
-          onSelect={handleSelectSuggestion}
+          onSelect={(book) => navigate(`/book/${book.id}`)}
           onClear={clearQuery}
         />
         <p className="mt-3 text-sm text-muted" aria-live="polite">
@@ -67,15 +48,6 @@ export function HomePage() {
             : t('home.catalogCount', { count: books.length })}
         </p>
       </div>
-
-      {notice ? (
-        <div
-          role="status"
-          className="mb-6 rounded-xl border border-accent/20 bg-accent-light px-4 py-3 text-sm font-medium text-accent-dark"
-        >
-          {notice}
-        </div>
-      ) : null}
 
       {filteredBooks.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
@@ -94,12 +66,7 @@ export function HomePage() {
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredBooks.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              onBuy={handleBuy}
-              onBorrow={handleBorrow}
-            />
+            <BookCard key={book.id} book={book} />
           ))}
         </div>
       )}

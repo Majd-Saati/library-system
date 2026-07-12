@@ -4,11 +4,9 @@ import { formatBookYear, type Book } from '../data/books'
 
 interface BookCardProps {
   book: Book
-  onBuy: (book: Book) => void
-  onBorrow: (book: Book) => void
 }
 
-export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
+export function BookCard({ book }: BookCardProps) {
   const { t } = useTranslation()
   const yearLabel = formatBookYear(book.year, t('book.bce'))
   const genreLabel = t(`genres.${book.genre}`, { defaultValue: book.genre })
@@ -49,20 +47,18 @@ export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => onBuy(book)}
-            className="rounded-xl bg-accent px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
+          <Link
+            to={`/checkout/${book.id}?action=buy`}
+            className="rounded-xl bg-accent px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
           >
             {t('book.buyNow')}
-          </button>
-          <button
-            type="button"
-            onClick={() => onBorrow(book)}
-            className="rounded-xl bg-brand px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
+          </Link>
+          <Link
+            to={`/checkout/${book.id}?action=borrow`}
+            className="rounded-xl bg-brand px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
           >
             {t('book.borrowNow')}
-          </button>
+          </Link>
         </div>
       </div>
     </article>

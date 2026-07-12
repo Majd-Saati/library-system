@@ -59,6 +59,35 @@
       "availableCopies": "النسخ المتاحة"
     }
   },
+  "checkout": {
+    "buyTitle": "شراء هذا الكتاب",
+    "borrowTitle": "استعارة هذا الكتاب",
+    "pageTitle": "بياناتك",
+    "backToBook": "العودة إلى الكتاب",
+    "subtitle": "أدخل بياناتك للمتابعة مع ”{{title}}“.",
+    "fields": {
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "address": "العنوان"
+    },
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "toast": {
+      "buySuccess": "تم إرسال طلب شراء ”{{title}}“.",
+      "borrowSuccess": "تم إرسال طلب استعارة ”{{title}}“."
+    },
+    "errors": {
+      "fullNameRequired": "الاسم الكامل مطلوب.",
+      "fullNameMin": "يجب أن يكون الاسم 3 أحرف على الأقل.",
+      "emailRequired": "البريد الإلكتروني مطلوب.",
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا.",
+      "phoneRequired": "رقم الهاتف مطلوب.",
+      "phoneInvalid": "أدخل رقم هاتف صالحًا.",
+      "addressRequired": "العنوان مطلوب.",
+      "addressMin": "يجب أن يكون العنوان 5 أحرف على الأقل."
+    }
+  },
   "shelf": {
     "title": "رفّي",
     "subtitle": "صفحة تجريبية مربوطة بشريحة الكتب في Redux.",

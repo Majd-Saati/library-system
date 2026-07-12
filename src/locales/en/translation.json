@@ -59,6 +59,35 @@
       "availableCopies": "Available copies"
     }
   },
+  "checkout": {
+    "buyTitle": "Buy this book",
+    "borrowTitle": "Borrow this book",
+    "pageTitle": "Your details",
+    "backToBook": "Back to book",
+    "subtitle": "Enter your details to continue with “{{title}}”.",
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone number",
+      "address": "Address"
+    },
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "toast": {
+      "buySuccess": "Purchase request submitted for “{{title}}”.",
+      "borrowSuccess": "Borrow request submitted for “{{title}}”."
+    },
+    "errors": {
+      "fullNameRequired": "Full name is required.",
+      "fullNameMin": "Full name must be at least 3 characters.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Enter a valid email address.",
+      "phoneRequired": "Phone number is required.",
+      "phoneInvalid": "Enter a valid phone number.",
+      "addressRequired": "Address is required.",
+      "addressMin": "Address must be at least 5 characters."
+    }
+  },
   "shelf": {
     "title": "My shelf",
     "subtitle": "Demo page wired to the Redux books slice.",

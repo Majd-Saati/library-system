@@ -1,30 +1,15 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { formatBookYear, getBookById, type Book } from '../data/books'
+import { formatBookYear, getBookById } from '../data/books'
 
 export function BookPage() {
   const { t, i18n } = useTranslation()
   const { bookId } = useParams<{ bookId: string }>()
   const book = bookId ? getBookById(bookId) : undefined
-  const [notice, setNotice] = useState<string | null>(null)
   const isRtl = i18n.dir() === 'rtl'
 
   if (!book) {
     return <Navigate to="/" replace />
-  }
-
-  function showNotice(message: string) {
-    setNotice(message)
-    window.setTimeout(() => setNotice(null), 2500)
-  }
-
-  function handleBuy(selected: Book) {
-    showNotice(t('book.purchaseStarted', { title: selected.title }))
-  }
-
-  function handleBorrow(selected: Book) {
-    showNotice(t('book.borrowStarted', { title: selected.title }))
   }
 
   const yearLabel = formatBookYear(book.year, t('book.bce'))
@@ -92,30 +77,19 @@ export function BookPage() {
             {book.description}
           </p>
 
-          {notice ? (
-            <div
-              role="status"
-              className="mt-6 rounded-xl border border-accent/20 bg-accent-light px-4 py-3 text-sm font-medium text-accent-dark"
-            >
-              {notice}
-            </div>
-          ) : null}
-
           <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => handleBuy(book)}
+            <Link
+              to={`/checkout/${book.id}?action=buy`}
               className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
             >
               {t('book.buyNow')}
-            </button>
-            <button
-              type="button"
-              onClick={() => handleBorrow(book)}
+            </Link>
+            <Link
+              to={`/checkout/${book.id}?action=borrow`}
               className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
             >
               {t('book.borrowNow')}
-            </button>
+            </Link>
           </div>
 
           <dl className="mt-10 grid gap-4 sm:grid-cols-2">
