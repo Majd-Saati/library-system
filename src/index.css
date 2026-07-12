@@ -1,64 +1,37 @@
 @import "tailwindcss";
 
-:root {
-  --text: #5c6570;
-  --text-h: #1a2330;
-  --bg: #f7f5f1;
-  --surface: #ffffff;
-  --muted: #eceae4;
-  --border: #d9d5cc;
-  --accent: #2f6f5e;
-  --accent-bg: rgba(47, 111, 94, 0.12);
-
-  --sans: 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --heading: Georgia, 'Times New Roman', serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 16px/1.5 var(--sans);
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, #e8efe9 0%, transparent 40%),
-    linear-gradient(180deg, #f7f5f1 0%, #efeae2 100%);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-brand: #1b4f72;
+  --color-brand-light: #e8f1f8;
+  --color-brand-dark: #123652;
+  --color-accent: #c47a2c;
+  --color-accent-light: #faf1e6;
+  --color-accent-dark: #9a5d1c;
+  --font-sans: "Literata", Georgia, "Times New Roman", serif;
+  --font-serif: "Literata", Georgia, "Times New Roman", serif;
+  --font-display: "Literata", Georgia, "Times New Roman", serif;
+  --font-mono: "Literata", Georgia, "Times New Roman", serif;
 }
 
-* {
-  box-sizing: border-box;
+html,
+body,
+#root,
+button,
+input,
+textarea,
+select {
+  font-family: "Literata", Georgia, "Times New Roman", serif;
 }
 
 body {
   margin: 0;
   min-width: 320px;
+  color: var(--color-brand-dark);
+  background:
+    radial-gradient(circle at top right, var(--color-accent-light), transparent 35%),
+    radial-gradient(circle at top left, var(--color-brand-light), transparent 40%),
+    #f8f6f2;
 }
 
-#root {
-  min-height: 100svh;
-}
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 600;
-  color: var(--text-h);
-}
 
-p {
-  margin: 0;
-}
-
-code {
-  font-family: var(--mono);
-  font-size: 0.9em;
-  padding: 0.1em 0.35em;
-  border-radius: 4px;
-  background: var(--muted);
-  color: var(--text-h);
-}
-
-button,
-input {
-  font: inherit;
-}
