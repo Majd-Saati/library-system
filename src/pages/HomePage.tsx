@@ -42,10 +42,10 @@ export function HomePage() {
         <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
           {t('home.eyebrow')}
         </p>
-        <h1 className="font-display text-4xl text-brand-dark sm:text-5xl">
+        <h1 className="font-display text-4xl text-ink sm:text-5xl">
           {t('home.title')}
         </h1>
-        <p className="mt-3 text-base text-brand/75 sm:text-lg">
+        <p className="mt-3 text-base text-muted sm:text-lg">
           {t('home.subtitle')}
         </p>
       </div>
@@ -58,7 +58,7 @@ export function HomePage() {
           onSelect={handleSelectSuggestion}
           onClear={clearQuery}
         />
-        <p className="mt-3 text-sm text-brand/60" aria-live="polite">
+        <p className="mt-3 text-sm text-muted" aria-live="polite">
           {hasQuery
             ? t('home.resultsFor', {
                 count: filteredBooks.length,
@@ -78,15 +78,15 @@ export function HomePage() {
       ) : null}
 
       {filteredBooks.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-brand/20 bg-white/70 px-6 py-16 text-center">
-          <p className="text-lg font-semibold text-brand-dark">
+        <div className="rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
+          <p className="text-lg font-semibold text-ink">
             {t('home.emptyTitle')}
           </p>
-          <p className="mt-2 text-brand/65">{t('home.emptySubtitle')}</p>
+          <p className="mt-2 text-muted">{t('home.emptySubtitle')}</p>
           <button
             type="button"
             onClick={clearQuery}
-            className="mt-5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark"
+            className="mt-5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
           >
             {t('home.clearSearch')}
           </button>

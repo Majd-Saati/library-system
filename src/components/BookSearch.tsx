@@ -98,7 +98,7 @@ export function BookSearch({
       <div className="relative">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 start-4 flex items-center text-brand/50"
+          className="pointer-events-none absolute inset-y-0 start-4 flex items-center text-muted"
         >
           <svg
             viewBox="0 0 24 24"
@@ -132,7 +132,7 @@ export function BookSearch({
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          className="w-full rounded-2xl border border-brand/15 bg-white py-3.5 pe-20 ps-12 text-base text-brand-dark shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-brand/40 focus:border-brand focus:ring-4 focus:ring-brand/15"
+          className="w-full rounded-2xl border border-border bg-surface py-3.5 pe-20 ps-12 text-base text-ink shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-4 focus:ring-brand/15 dark:shadow-[0_10px_30px_-18px_rgba(0,0,0,0.55)]"
         />
 
         {query ? (
@@ -142,7 +142,7 @@ export function BookSearch({
               onClear()
               setIsOpen(false)
             }}
-            className="absolute inset-y-0 end-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-brand/70 transition hover:bg-brand-light hover:text-brand"
+            className="absolute inset-y-0 end-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-muted transition hover:bg-brand-light hover:text-brand"
             aria-label={t('search.clearAria')}
           >
             {t('search.clear')}
@@ -155,10 +155,10 @@ export function BookSearch({
           id={listboxId}
           role="listbox"
           aria-label={t('search.suggestions')}
-          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-brand/10 bg-white p-2 shadow-[0_18px_40px_-20px_rgba(27,79,114,0.55)]"
+          className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-20px_rgba(27,79,114,0.55)] dark:shadow-[0_18px_40px_-20px_rgba(0,0,0,0.65)]"
         >
           {suggestions.length === 0 ? (
-            <li className="px-3 py-3 text-sm text-brand/60">
+            <li className="px-3 py-3 text-sm text-muted">
               {t('search.noMatches')}
             </li>
           ) : (
@@ -179,19 +179,21 @@ export function BookSearch({
                     onClick={() => handleSelect(book)}
                     className={[
                       'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition',
-                      isActive ? 'bg-brand-light text-brand-dark' : 'hover:bg-accent-light/70',
+                      isActive
+                        ? 'bg-brand-light text-ink'
+                        : 'hover:bg-accent-light/70',
                     ].join(' ')}
                   >
                     <img
                       src={book.coverUrl}
                       alt=""
-                      className="h-12 w-8 shrink-0 rounded object-cover ring-1 ring-brand/10"
+                      className="h-12 w-8 shrink-0 rounded object-cover ring-1 ring-border"
                     />
                     <span className="min-w-0">
-                      <span className="block truncate font-semibold text-brand-dark">
+                      <span className="block truncate font-semibold text-ink">
                         {book.title}
                       </span>
-                      <span className="block truncate text-sm text-brand/65">
+                      <span className="block truncate text-sm text-muted">
                         {book.author} · {genreLabel}
                       </span>
                     </span>

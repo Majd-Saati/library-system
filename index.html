@@ -11,6 +11,14 @@
       rel="stylesheet"
     />
     <title>Library System</title>
+    <script>
+      (() => {
+        const stored = localStorage.getItem('library-theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const isDark = stored === 'dark' || ((stored === 'system' || !stored) && prefersDark)
+        document.documentElement.classList.toggle('dark', isDark)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

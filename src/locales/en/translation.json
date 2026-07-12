@@ -9,6 +9,15 @@
     "en": "English",
     "ar": "Arabic"
   },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "lightShort": "Light",
+    "darkShort": "Dark",
+    "systemShort": "Auto"
+  },
   "home": {
     "eyebrow": "Catalog",
     "title": "Discover your next read",

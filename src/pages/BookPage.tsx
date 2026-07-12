@@ -56,7 +56,7 @@ export function BookPage() {
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
         <div className="mx-auto w-full max-w-xs lg:mx-0">
-          <div className="overflow-hidden rounded-3xl bg-brand-light shadow-[0_24px_50px_-28px_rgba(27,79,114,0.55)] ring-1 ring-brand/10">
+          <div className="overflow-hidden rounded-3xl bg-brand-light shadow-[0_24px_50px_-28px_rgba(27,79,114,0.55)] ring-1 ring-border dark:shadow-[0_24px_50px_-28px_rgba(0,0,0,0.65)]">
             <img
               src={book.coverUrl}
               alt={t('book.coverAlt', { title: book.title })}
@@ -69,10 +69,10 @@ export function BookPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
             {genreLabel}
           </p>
-          <h1 className="mt-2 font-display text-4xl text-brand-dark sm:text-5xl">
+          <h1 className="mt-2 font-display text-4xl text-ink sm:text-5xl">
             {book.title}
           </h1>
-          <p className="mt-3 text-lg text-brand/75">
+          <p className="mt-3 text-lg text-muted">
             {t('book.byAuthor', { author: book.author, year: yearLabel })}
           </p>
 
@@ -88,7 +88,7 @@ export function BookPage() {
             </span>
           </div>
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-brand-dark/85 sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink/85 sm:text-lg">
             {book.description}
           </p>
 
@@ -105,14 +105,14 @@ export function BookPage() {
             <button
               type="button"
               onClick={() => handleBuy(book)}
-              className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
             >
               {t('book.buyNow')}
             </button>
             <button
               type="button"
               onClick={() => handleBorrow(book)}
-              className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
             >
               {t('book.borrowNow')}
             </button>
@@ -122,12 +122,12 @@ export function BookPage() {
             {details.map((detail) => (
               <div
                 key={detail.label}
-                className="rounded-2xl bg-white px-4 py-3 shadow-sm ring-1 ring-brand/10"
+                className="rounded-2xl bg-surface px-4 py-3 shadow-sm ring-1 ring-border"
               >
-                <dt className="text-xs font-semibold uppercase tracking-wide text-brand/55">
+                <dt className="text-xs font-semibold uppercase tracking-wide text-muted">
                   {detail.label}
                 </dt>
-                <dd className="mt-1 text-base font-semibold text-brand-dark">
+                <dd className="mt-1 text-base font-semibold text-ink">
                   {detail.value}
                 </dd>
               </div>

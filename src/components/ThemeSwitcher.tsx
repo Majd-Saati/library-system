@@ -1,30 +1,28 @@
 import { useTranslation } from 'react-i18next'
+import { useTheme, type Theme } from '../theme/ThemeProvider'
 
-export function LanguageSwitcher() {
-  const { t, i18n } = useTranslation()
-  const currentLanguage = (i18n.resolvedLanguage ?? i18n.language).startsWith('ar')
-    ? 'ar'
-    : 'en'
+const THEMES: Theme[] = ['light', 'dark', 'system']
 
-  function changeLanguage(language: 'en' | 'ar') {
-    void i18n.changeLanguage(language)
-  }
+export function ThemeSwitcher() {
+  const { t } = useTranslation()
+  const { theme, setTheme } = useTheme()
 
   return (
     <div
       className="flex items-center gap-1 rounded-xl bg-brand-light p-1"
       role="group"
-      aria-label={t('language.label')}
+      aria-label={t('theme.label')}
     >
-      {(['en', 'ar'] as const).map((language) => {
-        const isActive = currentLanguage === language
+      {THEMES.map((option) => {
+        const isActive = theme === option
 
         return (
           <button
-            key={language}
+            key={option}
             type="button"
-            onClick={() => changeLanguage(language)}
+            onClick={() => setTheme(option)}
             aria-pressed={isActive}
+            title={t(`theme.${option}`)}
             className={[
               'rounded-lg px-2.5 py-1.5 text-sm font-semibold transition',
               isActive
@@ -32,7 +30,7 @@ export function LanguageSwitcher() {
                 : 'text-brand hover:bg-surface/80',
             ].join(' ')}
           >
-            {t(`language.${language}`)}
+            {t(`theme.${option}Short`)}
           </button>
         )
       })}

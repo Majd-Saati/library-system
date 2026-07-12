@@ -9,6 +9,15 @@
     "en": "الإنجليزية",
     "ar": "العربية"
   },
+  "theme": {
+    "label": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "lightShort": "فاتح",
+    "darkShort": "داكن",
+    "systemShort": "تلقائي"
+  },
   "home": {
     "eyebrow": "الفهرس",
     "title": "اكتشف كتابك التالي",

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-brand: #1b4f72;
   --color-brand-light: #e8f1f8;
@@ -7,11 +9,30 @@
   --color-accent: #c47a2c;
   --color-accent-light: #faf1e6;
   --color-accent-dark: #9a5d1c;
+  --color-surface: #ffffff;
+  --color-page: #f8f6f2;
+  --color-ink: #123652;
+  --color-muted: #5c6b7a;
+  --color-border: #d5dde5;
   --font-sans: "Literata", Georgia, "Times New Roman", serif;
   --font-serif: "Literata", Georgia, "Times New Roman", serif;
   --font-display: "Literata", Georgia, "Times New Roman", serif;
   --font-mono: "Literata", Georgia, "Times New Roman", serif;
   --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
+}
+
+.dark {
+  --color-brand: #7eb6d9;
+  --color-brand-light: #1a3042;
+  --color-brand-dark: #e8f1f8;
+  --color-accent: #e0a04a;
+  --color-accent-light: #3a2c18;
+  --color-accent-dark: #f2c57a;
+  --color-surface: #15202b;
+  --color-page: #0d141c;
+  --color-ink: #e8f1f8;
+  --color-muted: #9aafc0;
+  --color-border: #2a3b4c;
 }
 
 html,
@@ -37,9 +58,10 @@ html[dir="rtl"] select {
 body {
   margin: 0;
   min-width: 320px;
-  color: var(--color-brand-dark);
+  color: var(--color-ink);
   background:
-    radial-gradient(circle at top right, var(--color-accent-light), transparent 35%),
-    radial-gradient(circle at top left, var(--color-brand-light), transparent 40%),
-    #f8f6f2;
+    radial-gradient(circle at top right, color-mix(in oklab, var(--color-accent-light) 80%, transparent), transparent 35%),
+    radial-gradient(circle at top left, color-mix(in oklab, var(--color-brand-light) 80%, transparent), transparent 40%),
+    var(--color-page);
+  transition: background-color 200ms ease, color 200ms ease;
 }
