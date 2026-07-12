@@ -1,75 +1,79 @@
-import { useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { addBook, removeBook } from '../store/slices/booksSlice'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { Link } from 'react-router-dom'
+import { getBookById } from '../data/books'
+import { useAppSelector } from '../store/hooks'
+import { selectLoans } from '../store/slices/loansSlice'
 
 export function BooksPage() {
-  const { t } = useTranslation()
-  const books = useAppSelector((state) => state.books.items)
-  const dispatch = useAppDispatch()
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (!title.trim() || !author.trim()) return
-
-    dispatch(addBook({ title: title.trim(), author: author.trim() }))
-    setTitle('')
-    setAuthor('')
-  }
+  const { t, i18n } = useTranslation()
+  const loans = useAppSelector(selectLoans)
 
   return (
-    <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <h1 className="font-display text-4xl text-ink">{t('shelf.title')}</h1>
       <p className="mt-2 text-muted">{t('shelf.subtitle')}</p>
 
-      <form
-        className="mt-8 flex flex-col gap-3 rounded-2xl bg-surface p-4 shadow-sm ring-1 ring-border sm:flex-row"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          placeholder={t('shelf.titlePlaceholder')}
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-          className="flex-1 rounded-xl border border-border bg-brand-light/40 px-3 py-2.5 text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
-        />
-        <input
-          type="text"
-          placeholder={t('shelf.authorPlaceholder')}
-          value={author}
-          onChange={(event) => setAuthor(event.target.value)}
-          className="flex-1 rounded-xl border border-border bg-brand-light/40 px-3 py-2.5 text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
-        />
-        <button
-          type="submit"
-          className="rounded-xl bg-accent px-4 py-2.5 font-semibold text-white transition hover:bg-accent-dark dark:text-page"
-        >
-          {t('shelf.addBook')}
-        </button>
-      </form>
-
-      <ul className="mt-6 space-y-3">
-        {books.map((book) => (
-          <li
-            key={book.id}
-            className="flex items-center justify-between gap-4 rounded-2xl bg-surface px-4 py-3 shadow-sm ring-1 ring-border"
+      {loans.length === 0 ? (
+        <div className="mt-10 rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
+          <p className="text-lg font-semibold text-ink">{t('shelf.emptyTitle')}</p>
+          <p className="mt-2 text-muted">{t('shelf.emptySubtitle')}</p>
+          <Link
+            to="/"
+            className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
           >
-            <div>
-              <strong className="block text-ink">{book.title}</strong>
-              <span className="text-sm text-muted">{book.author}</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => dispatch(removeBook(book.id))}
-              className="rounded-lg bg-brand-light px-3 py-1.5 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white dark:hover:text-page"
-            >
-              {t('shelf.remove')}
-            </button>
-          </li>
-        ))}
-      </ul>
+            {t('shelf.browseCatalog')}
+          </Link>
+        </div>
+      ) : (
+        <ul className="mt-8 space-y-4">
+          {loans.map((loan) => {
+            const book = getBookById(loan.bookId)
+            if (!book) return null
+
+            const borrowedDate = new Date(loan.borrowedAt).toLocaleDateString(
+              i18n.language,
+              { year: 'numeric', month: 'short', day: 'numeric' },
+            )
+
+            return (
+              <li
+                key={loan.id}
+                className="flex flex-col gap-4 rounded-2xl bg-surface p-4 shadow-sm ring-1 ring-border sm:flex-row sm:items-center sm:justify-between"
+              >
+                <div className="flex gap-4">
+                  <img
+                    src={book.coverUrl}
+                    alt={t('book.coverAlt', { title: book.title })}
+                    className="h-28 w-20 shrink-0 rounded-lg object-cover ring-1 ring-border"
+                  />
+                  <div>
+                    <Link
+                      to={`/book/${book.id}`}
+                      className="font-display text-xl text-ink transition hover:text-accent"
+                    >
+                      {book.title}
+                    </Link>
+                    <p className="mt-1 text-sm text-muted">{book.author}</p>
+                    <p className="mt-3 text-sm text-muted">
+                      {t('shelf.borrowedBy', {
+                        name: loan.fullName,
+                        date: borrowedDate,
+                      })}
+                    </p>
+                  </div>
+                </div>
+
+                <Link
+                  to={`/return/${loan.id}`}
+                  className="inline-flex items-center justify-center rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
+                >
+                  {t('shelf.returnBook')}
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      )}
     </section>
   )
 }

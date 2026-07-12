@@ -75,7 +75,8 @@
     "cancel": "إلغاء",
     "toast": {
       "buySuccess": "تم إرسال طلب شراء ”{{title}}“.",
-      "borrowSuccess": "تم إرسال طلب استعارة ”{{title}}“."
+      "borrowSuccess": "تم إرسال طلب استعارة ”{{title}}“.",
+      "unavailable": "لا تتوفر نسخ من ”{{title}}“ للاستعارة."
     },
     "errors": {
       "fullNameRequired": "الاسم الكامل مطلوب.",
@@ -90,11 +91,41 @@
   },
   "shelf": {
     "title": "رفّي",
-    "subtitle": "صفحة تجريبية مربوطة بشريحة الكتب في Redux.",
-    "titlePlaceholder": "العنوان",
-    "authorPlaceholder": "المؤلف",
-    "addBook": "إضافة كتاب",
-    "remove": "إزالة"
+    "subtitle": "الكتب المستعارة حاليًا. أعدها عندما تنتهي من القراءة.",
+    "emptyTitle": "لا توجد كتب مستعارة بعد",
+    "emptySubtitle": "استعر عنوانًا من الفهرس ليظهر هنا.",
+    "browseCatalog": "تصفح الفهرس",
+    "returnBook": "إعادة الكتاب",
+    "borrowedBy": "استعاره {{name}} في {{date}}"
+  },
+  "return": {
+    "eyebrow": "إعادة",
+    "pageTitle": "أعد هذا الكتاب",
+    "subtitle": "أكد بريدك الإلكتروني وأعد ”{{title}}“ إلى المكتبة.",
+    "backToShelf": "العودة إلى رفّي",
+    "submit": "تأكيد الإعادة",
+    "cancel": "إلغاء",
+    "fields": {
+      "email": "بريد المستعير",
+      "emailPlaceholder": "استخدم البريد المستخدم عند الاستعارة",
+      "conditionNotes": "ملاحظات الحالة (اختياري)",
+      "conditionNotesPlaceholder": "أي ملاحظات حول حالة الكتاب…",
+      "confirmReturn": "أؤكد أنني أعيد هذا الكتاب."
+    },
+    "loan": {
+      "borrower": "المستعير",
+      "borrowedAt": "تاريخ الاستعارة"
+    },
+    "toast": {
+      "success": "تمت إعادة ”{{title}}“ بنجاح."
+    },
+    "errors": {
+      "emailRequired": "البريد الإلكتروني مطلوب.",
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا.",
+      "emailMismatch": "يجب أن يطابق البريد بريد المستعير لهذا القرض.",
+      "notesMax": "يجب ألا تتجاوز الملاحظات 500 حرف.",
+      "confirmRequired": "يرجى تأكيد الإعادة."
+    }
   },
   "genres": {
     "Classic": "كلاسيكي",

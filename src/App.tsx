@@ -5,6 +5,7 @@ import { BookPage } from './pages/BookPage'
 import { BooksPage } from './pages/BooksPage'
 import { CheckoutPage } from './pages/CheckoutPage'
 import { HomePage } from './pages/HomePage'
+import { ReturnPage } from './pages/ReturnPage'
 import { useTheme } from './theme/ThemeProvider'
 
 function AppToaster() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="books" element={<BooksPage />} />
           <Route path="book/:bookId" element={<BookPage />} />
           <Route path="checkout/:bookId" element={<CheckoutPage />} />
+          <Route path="return/:loanId" element={<ReturnPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

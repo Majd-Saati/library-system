@@ -75,7 +75,8 @@
     "cancel": "Cancel",
     "toast": {
       "buySuccess": "Purchase request submitted for “{{title}}”.",
-      "borrowSuccess": "Borrow request submitted for “{{title}}”."
+      "borrowSuccess": "Borrow request submitted for “{{title}}”.",
+      "unavailable": "“{{title}}” has no copies left to borrow."
     },
     "errors": {
       "fullNameRequired": "Full name is required.",
@@ -90,11 +91,41 @@
   },
   "shelf": {
     "title": "My shelf",
-    "subtitle": "Demo page wired to the Redux books slice.",
-    "titlePlaceholder": "Title",
-    "authorPlaceholder": "Author",
-    "addBook": "Add book",
-    "remove": "Remove"
+    "subtitle": "Books you currently have on loan. Return them when you are done reading.",
+    "emptyTitle": "No borrowed books yet",
+    "emptySubtitle": "Borrow a title from the catalog to see it here.",
+    "browseCatalog": "Browse catalog",
+    "returnBook": "Return book",
+    "borrowedBy": "Borrowed by {{name}} on {{date}}"
+  },
+  "return": {
+    "eyebrow": "Return",
+    "pageTitle": "Return this book",
+    "subtitle": "Confirm your email and return “{{title}}” to the library.",
+    "backToShelf": "Back to my shelf",
+    "submit": "Confirm return",
+    "cancel": "Cancel",
+    "fields": {
+      "email": "Borrower email",
+      "emailPlaceholder": "Use the email from your borrow request",
+      "conditionNotes": "Condition notes (optional)",
+      "conditionNotesPlaceholder": "Any notes about the book condition…",
+      "confirmReturn": "I confirm I am returning this book."
+    },
+    "loan": {
+      "borrower": "Borrower",
+      "borrowedAt": "Borrowed on"
+    },
+    "toast": {
+      "success": "“{{title}}” was returned successfully."
+    },
+    "errors": {
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Enter a valid email address.",
+      "emailMismatch": "Email must match the borrower on this loan.",
+      "notesMax": "Notes must be 500 characters or fewer.",
+      "confirmRequired": "Please confirm the return."
+    }
   },
   "genres": {
     "Classic": "Classic",

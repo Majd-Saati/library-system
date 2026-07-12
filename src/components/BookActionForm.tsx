@@ -2,6 +2,11 @@ import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import type { Book } from '../data/books'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import {
+  borrowBook,
+  selectActiveLoanCountForBook,
+} from '../store/slices/loansSlice'
 import {
   checkoutInitialValues,
   createCheckoutSchema,
@@ -20,6 +25,10 @@ const ERROR_COLOR = '#c0392b'
 
 export function BookActionForm({ book, action, onClose }: BookActionFormProps) {
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const activeLoans = useAppSelector((state) =>
+    selectActiveLoanCountForBook(state, book.id),
+  )
   const validationSchema = createCheckoutSchema(t)
 
   function handleSubmit(values: CheckoutFormValues) {
@@ -33,6 +42,23 @@ export function BookActionForm({ book, action, onClose }: BookActionFormProps) {
       },
       user: values,
     })
+
+    if (action === 'borrow') {
+      if (activeLoans >= book.availableCopies) {
+        toast.error(t('checkout.toast.unavailable', { title: book.title }))
+        return
+      }
+
+      dispatch(
+        borrowBook({
+          bookId: book.id,
+          fullName: values.fullName,
+          email: values.email,
+          phone: values.phone,
+          address: values.address,
+        }),
+      )
+    }
 
     toast.success(
       action === 'buy'
