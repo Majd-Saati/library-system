@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { addBook, removeBook } from '../store/slices/booksSlice'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 
 export function BooksPage() {
+  const { t } = useTranslation()
   const books = useAppSelector((state) => state.books.items)
   const dispatch = useAppDispatch()
   const [title, setTitle] = useState('')
@@ -19,10 +21,8 @@ export function BooksPage() {
 
   return (
     <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      <h1 className="font-display text-4xl text-brand-dark">My shelf</h1>
-      <p className="mt-2 text-brand/75">
-        Demo page wired to the Redux <code className="rounded bg-brand-light px-1.5 py-0.5 text-brand">books</code> slice.
-      </p>
+      <h1 className="font-display text-4xl text-brand-dark">{t('shelf.title')}</h1>
+      <p className="mt-2 text-brand/75">{t('shelf.subtitle')}</p>
 
       <form
         className="mt-8 flex flex-col gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-brand/10 sm:flex-row"
@@ -30,14 +30,14 @@ export function BooksPage() {
       >
         <input
           type="text"
-          placeholder="Title"
+          placeholder={t('shelf.titlePlaceholder')}
           value={title}
           onChange={(event) => setTitle(event.target.value)}
           className="flex-1 rounded-xl border border-brand/15 bg-brand-light/40 px-3 py-2.5 text-brand-dark outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
         />
         <input
           type="text"
-          placeholder="Author"
+          placeholder={t('shelf.authorPlaceholder')}
           value={author}
           onChange={(event) => setAuthor(event.target.value)}
           className="flex-1 rounded-xl border border-brand/15 bg-brand-light/40 px-3 py-2.5 text-brand-dark outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
@@ -46,7 +46,7 @@ export function BooksPage() {
           type="submit"
           className="rounded-xl bg-accent px-4 py-2.5 font-semibold text-white transition hover:bg-accent-dark"
         >
-          Add book
+          {t('shelf.addBook')}
         </button>
       </form>
 
@@ -65,7 +65,7 @@ export function BooksPage() {
               onClick={() => dispatch(removeBook(book.id))}
               className="rounded-lg bg-brand-light px-3 py-1.5 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white"
             >
-              Remove
+              {t('shelf.remove')}
             </button>
           </li>
         ))}

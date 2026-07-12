@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { formatBookYear, getBookById, type Book } from '../data/books'
 
 export function BookPage() {
+  const { t, i18n } = useTranslation()
   const { bookId } = useParams<{ bookId: string }>()
   const book = bookId ? getBookById(bookId) : undefined
   const [notice, setNotice] = useState<string | null>(null)
+  const isRtl = i18n.dir() === 'rtl'
 
   if (!book) {
     return <Navigate to="/" replace />
@@ -17,22 +20,28 @@ export function BookPage() {
   }
 
   function handleBuy(selected: Book) {
-    showNotice(`Purchase started for “${selected.title}”.`)
+    showNotice(t('book.purchaseStarted', { title: selected.title }))
   }
 
   function handleBorrow(selected: Book) {
-    showNotice(`Borrow request placed for “${selected.title}”.`)
+    showNotice(t('book.borrowStarted', { title: selected.title }))
   }
 
+  const yearLabel = formatBookYear(book.year, t('book.bce'))
+  const genreLabel = t(`genres.${book.genre}`, { defaultValue: book.genre })
+
   const details = [
-    { label: 'Author', value: book.author },
-    { label: 'Genre', value: book.genre },
-    { label: 'Published', value: formatBookYear(book.year) },
-    { label: 'Pages', value: String(book.pages) },
-    { label: 'Language', value: book.language },
-    { label: 'Publisher', value: book.publisher },
-    { label: 'ISBN', value: book.isbn },
-    { label: 'Available copies', value: String(book.availableCopies) },
+    { label: t('book.details.author'), value: book.author },
+    { label: t('book.details.genre'), value: genreLabel },
+    { label: t('book.details.published'), value: yearLabel },
+    { label: t('book.details.pages'), value: String(book.pages) },
+    { label: t('book.details.language'), value: book.language },
+    { label: t('book.details.publisher'), value: book.publisher },
+    { label: t('book.details.isbn'), value: book.isbn },
+    {
+      label: t('book.details.availableCopies'),
+      value: String(book.availableCopies),
+    },
   ]
 
   return (
@@ -41,8 +50,8 @@ export function BookPage() {
         to="/"
         className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-accent"
       >
-        <span aria-hidden="true">←</span>
-        Back to catalog
+        <span aria-hidden="true">{isRtl ? '→' : '←'}</span>
+        {t('book.backToCatalog')}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
@@ -50,7 +59,7 @@ export function BookPage() {
           <div className="overflow-hidden rounded-3xl bg-brand-light shadow-[0_24px_50px_-28px_rgba(27,79,114,0.55)] ring-1 ring-brand/10">
             <img
               src={book.coverUrl}
-              alt={`Cover of ${book.title}`}
+              alt={t('book.coverAlt', { title: book.title })}
               className="aspect-[2/3] w-full object-cover"
             />
           </div>
@@ -58,13 +67,13 @@ export function BookPage() {
 
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            {book.genre}
+            {genreLabel}
           </p>
           <h1 className="mt-2 font-display text-4xl text-brand-dark sm:text-5xl">
             {book.title}
           </h1>
           <p className="mt-3 text-lg text-brand/75">
-            by {book.author} · {formatBookYear(book.year)}
+            {t('book.byAuthor', { author: book.author, year: yearLabel })}
           </p>
 
           <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -72,10 +81,10 @@ export function BookPage() {
               ${book.price.toFixed(2)}
             </p>
             <span className="rounded-full bg-accent-light px-3 py-1 text-sm font-semibold text-accent-dark">
-              Rating {book.rating.toFixed(1)} / 5
+              {t('book.rating', { rating: book.rating.toFixed(1) })}
             </span>
             <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-semibold text-brand">
-              {book.availableCopies} copies available
+              {t('book.copiesAvailable', { count: book.availableCopies })}
             </span>
           </div>
 
@@ -98,14 +107,14 @@ export function BookPage() {
               onClick={() => handleBuy(book)}
               className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
-              Buy now
+              {t('book.buyNow')}
             </button>
             <button
               type="button"
               onClick={() => handleBorrow(book)}
               className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
-              Borrow now
+              {t('book.borrowNow')}
             </button>
           </div>
 

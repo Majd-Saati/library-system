@@ -5,6 +5,7 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { Book } from '../data/books'
 
 interface BookSearchProps {
@@ -22,6 +23,7 @@ export function BookSearch({
   onSelect,
   onClear,
 }: BookSearchProps) {
+  const { t } = useTranslation()
   const listboxId = useId()
   const rootRef = useRef<HTMLDivElement>(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -90,13 +92,13 @@ export function BookSearch({
   return (
     <div ref={rootRef} className="relative w-full max-w-2xl">
       <label htmlFor="book-search" className="sr-only">
-        Search books by title, author, or genre
+        {t('search.label')}
       </label>
 
       <div className="relative">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-brand/50"
+          className="pointer-events-none absolute inset-y-0 start-4 flex items-center text-brand/50"
         >
           <svg
             viewBox="0 0 24 24"
@@ -117,7 +119,7 @@ export function BookSearch({
           value={query}
           autoComplete="off"
           spellCheck={false}
-          placeholder="Search by title, author, or genre…"
+          placeholder={t('search.placeholder')}
           aria-expanded={showSuggestions}
           aria-controls={listboxId}
           aria-autocomplete="list"
@@ -130,7 +132,7 @@ export function BookSearch({
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          className="w-full rounded-2xl border border-brand/15 bg-white py-3.5 pr-20 pl-12 text-base text-brand-dark shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-brand/40 focus:border-brand focus:ring-4 focus:ring-brand/15"
+          className="w-full rounded-2xl border border-brand/15 bg-white py-3.5 pe-20 ps-12 text-base text-brand-dark shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-brand/40 focus:border-brand focus:ring-4 focus:ring-brand/15"
         />
 
         {query ? (
@@ -140,10 +142,10 @@ export function BookSearch({
               onClear()
               setIsOpen(false)
             }}
-            className="absolute inset-y-0 right-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-brand/70 transition hover:bg-brand-light hover:text-brand"
-            aria-label="Clear search"
+            className="absolute inset-y-0 end-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-brand/70 transition hover:bg-brand-light hover:text-brand"
+            aria-label={t('search.clearAria')}
           >
-            Clear
+            {t('search.clear')}
           </button>
         ) : null}
       </div>
@@ -152,16 +154,19 @@ export function BookSearch({
         <ul
           id={listboxId}
           role="listbox"
-          aria-label="Book suggestions"
+          aria-label={t('search.suggestions')}
           className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-brand/10 bg-white p-2 shadow-[0_18px_40px_-20px_rgba(27,79,114,0.55)]"
         >
           {suggestions.length === 0 ? (
             <li className="px-3 py-3 text-sm text-brand/60">
-              No matching books found.
+              {t('search.noMatches')}
             </li>
           ) : (
             suggestions.map((book, index) => {
               const isActive = index === activeIndex
+              const genreLabel = t(`genres.${book.genre}`, {
+                defaultValue: book.genre,
+              })
 
               return (
                 <li key={book.id} role="presentation">
@@ -173,7 +178,7 @@ export function BookSearch({
                     onMouseEnter={() => setActiveIndex(index)}
                     onClick={() => handleSelect(book)}
                     className={[
-                      'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition',
+                      'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition',
                       isActive ? 'bg-brand-light text-brand-dark' : 'hover:bg-accent-light/70',
                     ].join(' ')}
                   >
@@ -187,7 +192,7 @@ export function BookSearch({
                         {book.title}
                       </span>
                       <span className="block truncate text-sm text-brand/65">
-                        {book.author} · {book.genre}
+                        {book.author} · {genreLabel}
                       </span>
                     </span>
                   </button>

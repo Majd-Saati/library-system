@@ -1,0 +1,74 @@
+{
+  "app": {
+    "name": "نظام المكتبة",
+    "home": "الرئيسية",
+    "myShelf": "رفّي"
+  },
+  "language": {
+    "label": "اللغة",
+    "en": "الإنجليزية",
+    "ar": "العربية"
+  },
+  "home": {
+    "eyebrow": "الفهرس",
+    "title": "اكتشف كتابك التالي",
+    "subtitle": "عشرون عنوانًا مختارة جاهزة للشراء أو الاستعارة من رف المكتبة.",
+    "resultsFor": "نتيجة واحدة لـ ”{{query}}“",
+    "resultsFor_other": "{{count}} نتائج لـ ”{{query}}“",
+    "catalogCount": "{{count}} كتب في الفهرس",
+    "emptyTitle": "لا توجد كتب تطابق بحثك",
+    "emptySubtitle": "جرّب عنوانًا أو مؤلفًا أو نوعًا آخر.",
+    "clearSearch": "مسح البحث"
+  },
+  "search": {
+    "label": "ابحث عن الكتب حسب العنوان أو المؤلف أو النوع",
+    "placeholder": "ابحث بالعنوان أو المؤلف أو النوع…",
+    "clear": "مسح",
+    "clearAria": "مسح البحث",
+    "suggestions": "اقتراحات الكتب",
+    "noMatches": "لا توجد كتب مطابقة."
+  },
+  "book": {
+    "buyNow": "اشترِ الآن",
+    "borrowNow": "استعر الآن",
+    "coverAlt": "غلاف كتاب {{title}}",
+    "backToCatalog": "العودة إلى الفهرس",
+    "byAuthor": "بقلم {{author}} · {{year}}",
+    "rating": "التقييم {{rating}} / 5",
+    "copiesAvailable": "{{count}} نسخ متاحة",
+    "purchaseStarted": "بدأ شراء ”{{title}}“.",
+    "borrowStarted": "تم تقديم طلب استعارة ”{{title}}“.",
+    "bce": "ق.م",
+    "details": {
+      "author": "المؤلف",
+      "genre": "النوع",
+      "published": "سنة النشر",
+      "pages": "الصفحات",
+      "language": "اللغة",
+      "publisher": "الناشر",
+      "isbn": "ردمك",
+      "availableCopies": "النسخ المتاحة"
+    }
+  },
+  "shelf": {
+    "title": "رفّي",
+    "subtitle": "صفحة تجريبية مربوطة بشريحة الكتب في Redux.",
+    "titlePlaceholder": "العنوان",
+    "authorPlaceholder": "المؤلف",
+    "addBook": "إضافة كتاب",
+    "remove": "إزالة"
+  },
+  "genres": {
+    "Classic": "كلاسيكي",
+    "Dystopian": "ديستوبي",
+    "Fiction": "خيال",
+    "Adventure": "مغامرة",
+    "Romance": "رومانسي",
+    "Sci-Fi": "خيال علمي",
+    "Fantasy": "فانتازيا",
+    "Gothic": "قوطي",
+    "Literary": "أدبي",
+    "Epic": "ملحمي",
+    "Horror": "رعب"
+  }
+}

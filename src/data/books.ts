@@ -362,6 +362,6 @@ export function getBookById(id: string): Book | undefined {
   return books.find((book) => book.id === id)
 }
 
-export function formatBookYear(year: number): string {
-  return year < 0 ? `${Math.abs(year)} BCE` : String(year)
+export function formatBookYear(year: number, bceLabel = 'BCE'): string {
+  return year < 0 ? `${Math.abs(year)} ${bceLabel}` : String(year)
 }

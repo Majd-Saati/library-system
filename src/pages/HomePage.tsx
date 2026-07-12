@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { books, type Book } from '../data/books'
 import { BookCard } from '../components/BookCard'
@@ -6,6 +7,7 @@ import { BookSearch } from '../components/BookSearch'
 import { useBookSearch } from '../hooks/useBookSearch'
 
 export function HomePage() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [notice, setNotice] = useState<string | null>(null)
   const {
@@ -23,11 +25,11 @@ export function HomePage() {
   }
 
   function handleBuy(book: Book) {
-    showNotice(`Purchase started for “${book.title}”.`)
+    showNotice(t('book.purchaseStarted', { title: book.title }))
   }
 
   function handleBorrow(book: Book) {
-    showNotice(`Borrow request placed for “${book.title}”.`)
+    showNotice(t('book.borrowStarted', { title: book.title }))
   }
 
   function handleSelectSuggestion(book: Book) {
@@ -38,13 +40,13 @@ export function HomePage() {
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8 max-w-2xl">
         <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-          Catalog
+          {t('home.eyebrow')}
         </p>
         <h1 className="font-display text-4xl text-brand-dark sm:text-5xl">
-          Discover your next read
+          {t('home.title')}
         </h1>
         <p className="mt-3 text-base text-brand/75 sm:text-lg">
-          Twenty curated titles ready to buy or borrow from the library shelf.
+          {t('home.subtitle')}
         </p>
       </div>
 
@@ -58,8 +60,11 @@ export function HomePage() {
         />
         <p className="mt-3 text-sm text-brand/60" aria-live="polite">
           {hasQuery
-            ? `${filteredBooks.length} result${filteredBooks.length === 1 ? '' : 's'} for “${query.trim()}”`
-            : `${books.length} books in the catalog`}
+            ? t('home.resultsFor', {
+                count: filteredBooks.length,
+                query: query.trim(),
+              })
+            : t('home.catalogCount', { count: books.length })}
         </p>
       </div>
 
@@ -74,14 +79,16 @@ export function HomePage() {
 
       {filteredBooks.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-brand/20 bg-white/70 px-6 py-16 text-center">
-          <p className="text-lg font-semibold text-brand-dark">No books match your search</p>
-          <p className="mt-2 text-brand/65">Try another title, author, or genre.</p>
+          <p className="text-lg font-semibold text-brand-dark">
+            {t('home.emptyTitle')}
+          </p>
+          <p className="mt-2 text-brand/65">{t('home.emptySubtitle')}</p>
           <button
             type="button"
             onClick={clearQuery}
             className="mt-5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark"
           >
-            Clear search
+            {t('home.clearSearch')}
           </button>
         </div>
       ) : (

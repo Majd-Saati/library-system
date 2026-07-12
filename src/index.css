@@ -11,6 +11,7 @@
   --font-serif: "Literata", Georgia, "Times New Roman", serif;
   --font-display: "Literata", Georgia, "Times New Roman", serif;
   --font-mono: "Literata", Georgia, "Times New Roman", serif;
+  --font-arabic: "Cairo", "Segoe UI", Tahoma, sans-serif;
 }
 
 html,
@@ -23,6 +24,16 @@ select {
   font-family: "Literata", Georgia, "Times New Roman", serif;
 }
 
+html[dir="rtl"],
+html[dir="rtl"] body,
+html[dir="rtl"] #root,
+html[dir="rtl"] button,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+  font-family: var(--font-arabic);
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -32,6 +43,3 @@ body {
     radial-gradient(circle at top left, var(--color-brand-light), transparent 40%),
     #f8f6f2;
 }
-
-
-

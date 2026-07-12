@@ -1,0 +1,74 @@
+{
+  "app": {
+    "name": "Library System",
+    "home": "Home",
+    "myShelf": "My shelf"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "ar": "Arabic"
+  },
+  "home": {
+    "eyebrow": "Catalog",
+    "title": "Discover your next read",
+    "subtitle": "Twenty curated titles ready to buy or borrow from the library shelf.",
+    "resultsFor": "{{count}} result for “{{query}}”",
+    "resultsFor_other": "{{count}} results for “{{query}}”",
+    "catalogCount": "{{count}} books in the catalog",
+    "emptyTitle": "No books match your search",
+    "emptySubtitle": "Try another title, author, or genre.",
+    "clearSearch": "Clear search"
+  },
+  "search": {
+    "label": "Search books by title, author, or genre",
+    "placeholder": "Search by title, author, or genre…",
+    "clear": "Clear",
+    "clearAria": "Clear search",
+    "suggestions": "Book suggestions",
+    "noMatches": "No matching books found."
+  },
+  "book": {
+    "buyNow": "Buy now",
+    "borrowNow": "Borrow now",
+    "coverAlt": "Cover of {{title}}",
+    "backToCatalog": "Back to catalog",
+    "byAuthor": "by {{author}} · {{year}}",
+    "rating": "Rating {{rating}} / 5",
+    "copiesAvailable": "{{count}} copies available",
+    "purchaseStarted": "Purchase started for “{{title}}”.",
+    "borrowStarted": "Borrow request placed for “{{title}}”.",
+    "bce": "BCE",
+    "details": {
+      "author": "Author",
+      "genre": "Genre",
+      "published": "Published",
+      "pages": "Pages",
+      "language": "Language",
+      "publisher": "Publisher",
+      "isbn": "ISBN",
+      "availableCopies": "Available copies"
+    }
+  },
+  "shelf": {
+    "title": "My shelf",
+    "subtitle": "Demo page wired to the Redux books slice.",
+    "titlePlaceholder": "Title",
+    "authorPlaceholder": "Author",
+    "addBook": "Add book",
+    "remove": "Remove"
+  },
+  "genres": {
+    "Classic": "Classic",
+    "Dystopian": "Dystopian",
+    "Fiction": "Fiction",
+    "Adventure": "Adventure",
+    "Romance": "Romance",
+    "Sci-Fi": "Sci-Fi",
+    "Fantasy": "Fantasy",
+    "Gothic": "Gothic",
+    "Literary": "Literary",
+    "Epic": "Epic",
+    "Horror": "Horror"
+  }
+}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { formatBookYear, type Book } from '../data/books'
 
 interface BookCardProps {
@@ -8,7 +9,9 @@ interface BookCardProps {
 }
 
 export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
-  const yearLabel = formatBookYear(book.year)
+  const { t } = useTranslation()
+  const yearLabel = formatBookYear(book.year, t('book.bce'))
+  const genreLabel = t(`genres.${book.genre}`, { defaultValue: book.genre })
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_12px_30px_-18px_rgba(27,79,114,0.45)] ring-1 ring-brand/10 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_40px_-20px_rgba(196,122,44,0.45)] hover:ring-accent/30">
@@ -18,12 +21,12 @@ export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
       >
         <img
           src={book.coverUrl}
-          alt={`Cover of ${book.title}`}
+          alt={t('book.coverAlt', { title: book.title })}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold tracking-wide text-brand shadow-sm backdrop-blur">
-          {book.genre}
+        <span className="absolute start-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold tracking-wide text-brand shadow-sm backdrop-blur">
+          {genreLabel}
         </span>
       </Link>
 
@@ -51,14 +54,14 @@ export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
             onClick={() => onBuy(book)}
             className="rounded-xl bg-accent px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            Buy now
+            {t('book.buyNow')}
           </button>
           <button
             type="button"
             onClick={() => onBorrow(book)}
             className="rounded-xl bg-brand px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
-            Borrow now
+            {t('book.borrowNow')}
           </button>
         </div>
       </div>
