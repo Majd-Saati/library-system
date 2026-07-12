@@ -112,7 +112,7 @@ export function BookSearch({
 
         <input
           id="book-search"
-          type="search"
+          type="text"
           role="combobox"
           value={query}
           autoComplete="off"
@@ -130,7 +130,7 @@ export function BookSearch({
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          className="w-full rounded-2xl border border-brand/15 bg-white py-3.5 pr-12 pl-12 text-base text-brand-dark shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-brand/40 focus:border-brand focus:ring-4 focus:ring-brand/15"
+          className="w-full rounded-2xl border border-brand/15 bg-white py-3.5 pr-20 pl-12 text-base text-brand-dark shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-brand/40 focus:border-brand focus:ring-4 focus:ring-brand/15"
         />
 
         {query ? (
@@ -140,7 +140,7 @@ export function BookSearch({
               onClear()
               setIsOpen(false)
             }}
-            className="absolute inset-y-0 right-3 my-auto h-8 rounded-lg px-2 text-sm font-semibold text-brand/70 transition hover:bg-brand-light hover:text-brand"
+            className="absolute inset-y-0 right-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-brand/70 transition hover:bg-brand-light hover:text-brand"
             aria-label="Clear search"
           >
             Clear

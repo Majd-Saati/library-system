@@ -1,4 +1,5 @@
-import type { Book } from '../data/books'
+import { Link } from 'react-router-dom'
+import { formatBookYear, type Book } from '../data/books'
 
 interface BookCardProps {
   book: Book
@@ -7,11 +8,14 @@ interface BookCardProps {
 }
 
 export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
-  const yearLabel = book.year < 0 ? `${Math.abs(book.year)} BCE` : String(book.year)
+  const yearLabel = formatBookYear(book.year)
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_12px_30px_-18px_rgba(27,79,114,0.45)] ring-1 ring-brand/10 transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_40px_-20px_rgba(196,122,44,0.45)] hover:ring-accent/30">
-      <div className="relative aspect-[2/3] overflow-hidden bg-brand-light">
+      <Link
+        to={`/book/${book.id}`}
+        className="relative block aspect-[2/3] overflow-hidden bg-brand-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      >
         <img
           src={book.coverUrl}
           alt={`Cover of ${book.title}`}
@@ -21,12 +25,17 @@ export function BookCard({ book, onBuy, onBorrow }: BookCardProps) {
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold tracking-wide text-brand shadow-sm backdrop-blur">
           {book.genre}
         </span>
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div className="flex-1">
           <h2 className="font-display text-lg leading-snug text-brand-dark">
-            {book.title}
+            <Link
+              to={`/book/${book.id}`}
+              className="transition hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            >
+              {book.title}
+            </Link>
           </h2>
           <p className="mt-1 text-sm text-brand/70">
             {book.author} · {yearLabel}

@@ -6,6 +6,13 @@ export interface Book {
   year: number
   price: number
   coverUrl: string
+  description: string
+  pages: number
+  language: string
+  publisher: string
+  isbn: string
+  availableCopies: number
+  rating: number
 }
 
 export const books: Book[] = [
@@ -17,6 +24,14 @@ export const books: Book[] = [
     year: 1813,
     price: 14.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/12648103-L.jpg',
+    description:
+      'A witty portrait of manners and marriage in Regency England, following Elizabeth Bennet as she navigates family pressure, social expectation, and a complicated first impression of Mr. Darcy.',
+    pages: 432,
+    language: 'English',
+    publisher: 'T. Egerton',
+    isbn: '978-0141439518',
+    availableCopies: 4,
+    rating: 4.8,
   },
   {
     id: '2',
@@ -26,6 +41,14 @@ export const books: Book[] = [
     year: 1949,
     price: 13.5,
     coverUrl: 'https://covers.openlibrary.org/b/id/10523338-L.jpg',
+    description:
+      'In a totalitarian future where Big Brother watches every move, Winston Smith risks everything to reclaim truth, memory, and personal freedom.',
+    pages: 328,
+    language: 'English',
+    publisher: 'Secker & Warburg',
+    isbn: '978-0451524935',
+    availableCopies: 6,
+    rating: 4.7,
   },
   {
     id: '3',
@@ -35,6 +58,14 @@ export const books: Book[] = [
     year: 1960,
     price: 15.25,
     coverUrl: 'https://covers.openlibrary.org/b/id/8228691-L.jpg',
+    description:
+      'Through Scout Finch’s eyes, a quiet Southern town confronts racial injustice as her father defends an innocent man in a landmark trial.',
+    pages: 336,
+    language: 'English',
+    publisher: 'J. B. Lippincott & Co.',
+    isbn: '978-0061120084',
+    availableCopies: 5,
+    rating: 4.9,
   },
   {
     id: '4',
@@ -44,6 +75,14 @@ export const books: Book[] = [
     year: 1925,
     price: 12.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/8432047-L.jpg',
+    description:
+      'Across glittering Jazz Age parties on Long Island, Jay Gatsby pursues an impossible dream and exposes the hollow shine of wealth and desire.',
+    pages: 180,
+    language: 'English',
+    publisher: 'Charles Scribner’s Sons',
+    isbn: '978-0743273565',
+    availableCopies: 3,
+    rating: 4.5,
   },
   {
     id: '5',
@@ -53,6 +92,14 @@ export const books: Book[] = [
     year: 1851,
     price: 16.4,
     coverUrl: 'https://covers.openlibrary.org/b/id/7222246-L.jpg',
+    description:
+      'Captain Ahab’s obsessive hunt for the white whale becomes an epic meditation on fate, vengeance, and the vast indifference of the sea.',
+    pages: 635,
+    language: 'English',
+    publisher: 'Harper & Brothers',
+    isbn: '978-0142437247',
+    availableCopies: 2,
+    rating: 4.2,
   },
   {
     id: '6',
@@ -62,6 +109,14 @@ export const books: Book[] = [
     year: 1847,
     price: 13.75,
     coverUrl: 'https://covers.openlibrary.org/b/id/8231856-L.jpg',
+    description:
+      'An orphaned governess claims her independence and confronts love, secrecy, and moral courage within the shadowed halls of Thornfield Hall.',
+    pages: 532,
+    language: 'English',
+    publisher: 'Smith, Elder & Co.',
+    isbn: '978-0141441146',
+    availableCopies: 4,
+    rating: 4.6,
   },
   {
     id: '7',
@@ -71,6 +126,14 @@ export const books: Book[] = [
     year: 1932,
     price: 14.2,
     coverUrl: 'https://covers.openlibrary.org/b/id/8775116-L.jpg',
+    description:
+      'In a engineered society of comfort and control, one outsider questions whether happiness without freedom is worth the cost.',
+    pages: 288,
+    language: 'English',
+    publisher: 'Chatto & Windus',
+    isbn: '978-0060850524',
+    availableCopies: 5,
+    rating: 4.4,
   },
   {
     id: '8',
@@ -80,6 +143,14 @@ export const books: Book[] = [
     year: 1937,
     price: 17.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/14625787-L.jpg',
+    description:
+      'Reluctant hobbit Bilbo Baggins joins a company of dwarves on a quest for treasure, dragons, and an unexpected sense of adventure.',
+    pages: 310,
+    language: 'English',
+    publisher: 'George Allen & Unwin',
+    isbn: '978-0547928227',
+    availableCopies: 7,
+    rating: 4.8,
   },
   {
     id: '9',
@@ -89,6 +160,14 @@ export const books: Book[] = [
     year: 1818,
     price: 11.5,
     coverUrl: 'https://covers.openlibrary.org/b/id/12817581-L.jpg',
+    description:
+      'Victor Frankenstein’s creation of life unleashes a tragedy about ambition, responsibility, and what it means to be human.',
+    pages: 280,
+    language: 'English',
+    publisher: 'Lackington, Hughes, Harding, Mavor & Jones',
+    isbn: '978-0486282114',
+    availableCopies: 3,
+    rating: 4.3,
   },
   {
     id: '10',
@@ -98,6 +177,14 @@ export const books: Book[] = [
     year: 1866,
     price: 15.8,
     coverUrl: 'https://covers.openlibrary.org/b/id/8235111-L.jpg',
+    description:
+      'A destitute student commits a terrible crime and is pursued by guilt, conscience, and the possibility of redemption in St. Petersburg.',
+    pages: 671,
+    language: 'English',
+    publisher: 'The Russian Messenger',
+    isbn: '978-0140449136',
+    availableCopies: 2,
+    rating: 4.6,
   },
   {
     id: '11',
@@ -107,6 +194,14 @@ export const books: Book[] = [
     year: 1951,
     price: 13.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/8231497-L.jpg',
+    description:
+      'Holden Caulfield wanders New York after leaving school, searching for authenticity in a world he sees as phony and exhausting.',
+    pages: 277,
+    language: 'English',
+    publisher: 'Little, Brown and Company',
+    isbn: '978-0316769488',
+    availableCopies: 4,
+    rating: 4.1,
   },
   {
     id: '12',
@@ -116,6 +211,14 @@ export const books: Book[] = [
     year: 1847,
     price: 12.4,
     coverUrl: 'https://covers.openlibrary.org/b/id/8225262-L.jpg',
+    description:
+      'On the wild Yorkshire moors, a fierce and destructive love binds Heathcliff and Catherine across generations of passion and revenge.',
+    pages: 416,
+    language: 'English',
+    publisher: 'Thomas Cautley Newby',
+    isbn: '978-0141439556',
+    availableCopies: 3,
+    rating: 4.4,
   },
   {
     id: '13',
@@ -125,6 +228,14 @@ export const books: Book[] = [
     year: -800,
     price: 14.1,
     coverUrl: 'https://covers.openlibrary.org/b/id/9255571-L.jpg',
+    description:
+      'Odysseus battles gods, monsters, and years of exile in his long voyage home to Ithaca and the family waiting for his return.',
+    pages: 541,
+    language: 'English',
+    publisher: 'Ancient oral tradition',
+    isbn: '978-0140268867',
+    availableCopies: 6,
+    rating: 4.7,
   },
   {
     id: '14',
@@ -134,6 +245,14 @@ export const books: Book[] = [
     year: 1897,
     price: 12.75,
     coverUrl: 'https://covers.openlibrary.org/b/id/11153216-L.jpg',
+    description:
+      'Letters and journals chart a chilling pursuit of Count Dracula as a circle of friends confronts an ancient evil in Victorian England.',
+    pages: 418,
+    language: 'English',
+    publisher: 'Archibald Constable and Company',
+    isbn: '978-0141439846',
+    availableCopies: 4,
+    rating: 4.3,
   },
   {
     id: '15',
@@ -143,6 +262,14 @@ export const books: Book[] = [
     year: 1868,
     price: 13.2,
     coverUrl: 'https://covers.openlibrary.org/b/id/10521272-L.jpg',
+    description:
+      'The four March sisters grow through love, ambition, and hardship while learning what family and selfhood mean during wartime America.',
+    pages: 449,
+    language: 'English',
+    publisher: 'Roberts Brothers',
+    isbn: '978-0143106654',
+    availableCopies: 5,
+    rating: 4.5,
   },
   {
     id: '16',
@@ -152,6 +279,14 @@ export const books: Book[] = [
     year: 1890,
     price: 11.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/12817594-L.jpg',
+    description:
+      'A beautiful young man remains untouched by time while a hidden portrait absorbs the moral decay of his pleasure-seeking life.',
+    pages: 254,
+    language: 'English',
+    publisher: 'Ward, Lock & Co.',
+    isbn: '978-0141439570',
+    availableCopies: 3,
+    rating: 4.4,
   },
   {
     id: '17',
@@ -161,6 +296,14 @@ export const books: Book[] = [
     year: 1953,
     price: 14.55,
     coverUrl: 'https://covers.openlibrary.org/b/id/9251994-L.jpg',
+    description:
+      'In a future where books are burned, fireman Guy Montag begins to question the system that keeps society numb and unthinking.',
+    pages: 194,
+    language: 'English',
+    publisher: 'Ballantine Books',
+    isbn: '978-1451673319',
+    availableCopies: 6,
+    rating: 4.6,
   },
   {
     id: '18',
@@ -170,6 +313,14 @@ export const books: Book[] = [
     year: 1878,
     price: 16.9,
     coverUrl: 'https://covers.openlibrary.org/b/id/9285689-L.jpg',
+    description:
+      'A sweeping novel of love, society, and consequence follows Anna’s affair and Levin’s quieter search for meaning in Russian life.',
+    pages: 864,
+    language: 'English',
+    publisher: 'The Russian Messenger',
+    isbn: '978-0143035008',
+    availableCopies: 2,
+    rating: 4.7,
   },
   {
     id: '19',
@@ -179,6 +330,14 @@ export const books: Book[] = [
     year: 1954,
     price: 24.99,
     coverUrl: 'https://covers.openlibrary.org/b/id/14627491-L.jpg',
+    description:
+      'Frodo Baggins and the Fellowship carry a perilous burden across Middle-earth in an epic struggle against the rising power of Sauron.',
+    pages: 1178,
+    language: 'English',
+    publisher: 'George Allen & Unwin',
+    isbn: '978-0618640157',
+    availableCopies: 5,
+    rating: 4.9,
   },
   {
     id: '20',
@@ -188,5 +347,21 @@ export const books: Book[] = [
     year: 1605,
     price: 18.5,
     coverUrl: 'https://covers.openlibrary.org/b/id/10523321-L.jpg',
+    description:
+      'An aging gentleman sets out as a knight-errant with Sancho Panza, blurring the line between idealism, comedy, and reality itself.',
+    pages: 1072,
+    language: 'English',
+    publisher: 'Francisco de Robles',
+    isbn: '978-0060934347',
+    availableCopies: 3,
+    rating: 4.5,
   },
 ]
+
+export function getBookById(id: string): Book | undefined {
+  return books.find((book) => book.id === id)
+}
+
+export function formatBookYear(year: number): string {
+  return year < 0 ? `${Math.abs(year)} BCE` : String(year)
+}

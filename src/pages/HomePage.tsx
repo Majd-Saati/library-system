@@ -1,17 +1,18 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { books, type Book } from '../data/books'
 import { BookCard } from '../components/BookCard'
 import { BookSearch } from '../components/BookSearch'
 import { useBookSearch } from '../hooks/useBookSearch'
 
 export function HomePage() {
+  const navigate = useNavigate()
   const [notice, setNotice] = useState<string | null>(null)
   const {
     query,
     setQuery,
     suggestions,
     filteredBooks,
-    selectBook,
     clearQuery,
     hasQuery,
   } = useBookSearch(books)
@@ -27,6 +28,10 @@ export function HomePage() {
 
   function handleBorrow(book: Book) {
     showNotice(`Borrow request placed for “${book.title}”.`)
+  }
+
+  function handleSelectSuggestion(book: Book) {
+    navigate(`/book/${book.id}`)
   }
 
   return (
@@ -48,7 +53,7 @@ export function HomePage() {
           query={query}
           suggestions={suggestions}
           onQueryChange={setQuery}
-          onSelect={selectBook}
+          onSelect={handleSelectSuggestion}
           onClear={clearQuery}
         />
         <p className="mt-3 text-sm text-brand/60" aria-live="polite">

@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 
 export function Layout() {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
@@ -13,9 +13,12 @@ export function Layout() {
     <div className="min-h-svh">
       <header className="sticky top-0 z-20 border-b border-brand/10 bg-white/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <p className="font-display text-xl tracking-tight text-brand sm:text-2xl">
+          <Link
+            to="/"
+            className="font-display text-xl tracking-tight text-brand transition hover:text-accent sm:text-2xl"
+          >
             Library System
-          </p>
+          </Link>
           <nav className="flex items-center gap-1 sm:gap-2">
             <NavLink to="/" end className={linkClass}>
               Home
