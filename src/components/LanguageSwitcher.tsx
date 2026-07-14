@@ -1,3 +1,4 @@
+import { Translate } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 
 export function LanguageSwitcher() {
@@ -16,6 +17,9 @@ export function LanguageSwitcher() {
       role="group"
       aria-label={t('language.label')}
     >
+      <span className="ps-2 text-brand" aria-hidden>
+        <Translate size={16} weight="regular" />
+      </span>
       {(['en', 'ar'] as const).map((language) => {
         const isActive = currentLanguage === language
 

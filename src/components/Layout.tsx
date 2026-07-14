@@ -1,3 +1,4 @@
+import { BookOpen, SignIn, SignOut } from '@phosphor-icons/react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -14,22 +15,7 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 function BrandMark() {
   return (
     <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-brand text-white shadow-[0_10px_24px_-12px_rgba(27,79,114,0.85)] transition duration-300 group-hover:scale-105 group-hover:bg-accent dark:text-page">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-5 w-5"
-        aria-hidden="true"
-      >
-        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-        <path d="M8 7h8" />
-        <path d="M8 11h6" />
-      </svg>
+      <BookOpen size={20} weight="fill" aria-hidden />
     </span>
   )
 }
@@ -115,7 +101,7 @@ export function Layout() {
               <div className="flex items-center gap-2 rounded-2xl bg-brand-light/70 py-1 ps-1 pe-1 ring-1 ring-border/70 sm:pe-2">
                 <span
                   className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand font-display text-sm font-bold text-white dark:text-page"
-                  aria-hidden="true"
+                  aria-hidden
                 >
                   {initials}
                 </span>
@@ -130,16 +116,18 @@ export function Layout() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="rounded-xl px-2.5 py-2 text-sm font-semibold text-ink/70 transition hover:bg-surface hover:text-accent"
+                  className="inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold text-ink/70 transition hover:bg-surface hover:text-accent"
                 >
+                  <SignOut size={16} weight="bold" aria-hidden />
                   {t('app.logout')}
                 </button>
               </div>
             ) : (
               <NavLink
                 to="/login"
-                className="rounded-xl bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_-14px_rgba(196,122,44,0.9)] transition hover:bg-accent-dark dark:text-page"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_-14px_rgba(196,122,44,0.9)] transition hover:bg-accent-dark dark:text-page"
               >
+                <SignIn size={16} weight="bold" aria-hidden />
                 {t('app.login')}
               </NavLink>
             )}

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { BackLink } from '../components/BackLink'
 import { BookActionForm } from '../components/BookActionForm'
 import { useBookQuery } from '../hooks/queries/useBookQuery'
 import type { BookActionType } from '../validation/checkoutSchema'
@@ -9,13 +10,12 @@ function isBookAction(value: string | null): value is BookActionType {
 }
 
 export function CheckoutPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const { bookId } = useParams<{ bookId: string }>()
   const [searchParams] = useSearchParams()
   const actionParam = searchParams.get('action')
   const { data: book, isLoading, isError } = useBookQuery(bookId)
-  const isRtl = i18n.dir() === 'rtl'
 
   if (!isBookAction(actionParam)) {
     return <Navigate to="/" replace />
@@ -45,13 +45,7 @@ export function CheckoutPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <Link
-        to={backTo}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-accent"
-      >
-        <span aria-hidden="true">{isRtl ? '→' : '←'}</span>
-        {t('checkout.backToBook')}
-      </Link>
+      <BackLink to={backTo}>{t('checkout.backToBook')}</BackLink>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:gap-12">
         <div className="mx-auto w-full max-w-xs lg:mx-0">

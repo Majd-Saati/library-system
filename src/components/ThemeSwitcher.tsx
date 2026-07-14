@@ -1,7 +1,14 @@
+import { Desktop, Moon, Sun } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { useTheme, type Theme } from '../theme/ThemeProvider'
 
 const THEMES: Theme[] = ['light', 'dark', 'system']
+
+const THEME_ICONS = {
+  light: Sun,
+  dark: Moon,
+  system: Desktop,
+} as const
 
 export function ThemeSwitcher() {
   const { t } = useTranslation()
@@ -15,6 +22,7 @@ export function ThemeSwitcher() {
     >
       {THEMES.map((option) => {
         const isActive = theme === option
+        const Icon = THEME_ICONS[option]
 
         return (
           <button
@@ -23,14 +31,15 @@ export function ThemeSwitcher() {
             onClick={() => setTheme(option)}
             aria-pressed={isActive}
             title={t(`theme.${option}`)}
+            aria-label={t(`theme.${option}`)}
             className={[
-              'rounded-lg px-2.5 py-1.5 text-sm font-semibold transition',
+              'grid place-items-center rounded-lg px-2.5 py-1.5 transition',
               isActive
                 ? 'bg-brand text-white dark:text-page'
                 : 'text-brand hover:bg-surface/80',
             ].join(' ')}
           >
-            {t(`theme.${option}Short`)}
+            <Icon size={16} weight={isActive ? 'fill' : 'regular'} aria-hidden />
           </button>
         )
       })}

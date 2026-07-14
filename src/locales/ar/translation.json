@@ -42,10 +42,7 @@
     "label": "المظهر",
     "light": "فاتح",
     "dark": "داكن",
-    "system": "النظام",
-    "lightShort": "فاتح",
-    "darkShort": "داكن",
-    "systemShort": "تلقائي"
+    "system": "النظام"
   },
   "home": {
     "eyebrow": "الفهرس",
@@ -94,8 +91,7 @@
       "language": "اللغة",
       "publisher": "الناشر",
       "isbn": "ردمك",
-      "availableCopies": "النسخ المتاحة",
-      "availability": "الحالة"
+      "availableCopies": "النسخ المتاحة"
     }
   },
   "checkout": {

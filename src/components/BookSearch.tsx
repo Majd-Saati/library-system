@@ -5,6 +5,7 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
+import { MagnifyingGlass, X } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import type { Book } from '../types/book'
 import { AvailabilityBadge } from './AvailabilityBadge'
@@ -102,19 +103,10 @@ export function BookSearch({
 
       <div className="relative">
         <span
-          aria-hidden="true"
+          aria-hidden
           className="pointer-events-none absolute inset-y-0 start-4 flex items-center text-muted"
         >
-          <svg
-            viewBox="0 0 24 24"
-            className="h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5" />
-          </svg>
+          <MagnifyingGlass size={20} weight="regular" />
         </span>
 
         <input
@@ -148,9 +140,10 @@ export function BookSearch({
               onClear()
               setIsOpen(false)
             }}
-            className="absolute inset-y-0 end-3 my-auto h-8 rounded-lg px-2.5 text-sm font-semibold text-muted transition hover:bg-brand-light hover:text-brand"
+            className="absolute inset-y-0 end-3 my-auto inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-sm font-semibold text-muted transition hover:bg-brand-light hover:text-brand"
             aria-label={t('search.clearAria')}
           >
+            <X size={14} weight="bold" aria-hidden />
             {t('search.clear')}
           </button>
         ) : null}

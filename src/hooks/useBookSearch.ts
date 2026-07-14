@@ -27,6 +27,5 @@ export function useBookSearch() {
     catalogError: booksQuery.error,
     refetchCatalog: booksQuery.refetch,
     catalogCount: books.length,
-    isSearchError: hasQuery && booksQuery.isError,
   }
 }

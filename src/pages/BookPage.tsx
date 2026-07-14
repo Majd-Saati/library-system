@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { AvailabilityBadge } from '../components/AvailabilityBadge'
+import { BackLink } from '../components/BackLink'
 import { useBookQuery } from '../hooks/queries/useBookQuery'
 import { formatBookYear } from '../types/book'
 
 export function BookPage() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { bookId } = useParams<{ bookId: string }>()
   const { data: book, isLoading, isError } = useBookQuery(bookId)
-  const isRtl = i18n.dir() === 'rtl'
 
   if (isLoading) {
     return (
@@ -49,13 +49,7 @@ export function BookPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:text-accent"
-      >
-        <span aria-hidden="true">{isRtl ? '→' : '←'}</span>
-        {t('book.backToCatalog')}
-      </Link>
+      <BackLink to="/">{t('book.backToCatalog')}</BackLink>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
         <div className="mx-auto w-full max-w-xs lg:mx-0">

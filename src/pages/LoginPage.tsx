@@ -1,11 +1,12 @@
+import { Eye, EyeSlash } from '@phosphor-icons/react'
 import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { getErrorMessage } from '../api'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { useLoginMutation } from '../hooks/mutations/useLoginMutation'
-import { getErrorMessage } from '../api'
 import { useAppSelector } from '../store/hooks'
 import { selectIsAuthenticated } from '../store/slices/authSlice'
 import {
@@ -15,46 +16,6 @@ import {
 } from '../validation/loginSchema'
 
 const ERROR_COLOR = '#c0392b'
-
-function EyeIcon({ open }: { open: boolean }) {
-  if (open) {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-5 w-5"
-        aria-hidden="true"
-      >
-        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
-        <circle cx="12" cy="12" r="3" />
-      </svg>
-    )
-  }
-
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-5 w-5"
-      aria-hidden="true"
-    >
-      <path d="M10.7 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-1.8 2.6" />
-      <path d="M6.7 6.7C3.8 8.5 2 12 2 12s3.5 7 10 7c1.7 0 3.2-.4 4.5-1" />
-      <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
-      <path d="m3 3 18 18" />
-    </svg>
-  )
-}
 
 export function LoginPage() {
   const { t } = useTranslation()
@@ -157,7 +118,11 @@ export function LoginPage() {
                         : t('login.showPassword')
                     }
                   >
-                    <EyeIcon open={showPassword} />
+                    {showPassword ? (
+                      <EyeSlash size={20} weight="regular" aria-hidden />
+                    ) : (
+                      <Eye size={20} weight="regular" aria-hidden />
+                    )}
                   </button>
                 </div>
                 <ErrorMessage

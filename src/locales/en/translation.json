@@ -42,10 +42,7 @@
     "label": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "system": "System",
-    "lightShort": "Light",
-    "darkShort": "Dark",
-    "systemShort": "Auto"
+    "system": "System"
   },
   "home": {
     "eyebrow": "Catalog",
@@ -94,8 +91,7 @@
       "language": "Language",
       "publisher": "Publisher",
       "isbn": "ISBN",
-      "availableCopies": "Available copies",
-      "availability": "Availability"
+      "availableCopies": "Available copies"
     }
   },
   "checkout": {
