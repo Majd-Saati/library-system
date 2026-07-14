@@ -16,10 +16,17 @@ export const loansApi = {
     )
   },
 
-  returnLoan(id: string) {
+  returnLoan(
+    id: string,
+    body: {
+      email: string
+      conditionNotes?: string
+      confirmReturn: boolean
+    },
+  ) {
     return apiClient<ApiSuccess<{ loan: Loan; book: Book }>>(
       `/loans/${id}/return`,
-      { method: 'POST' },
+      { method: 'POST', body },
     ).then((res) => res.data)
   },
 }

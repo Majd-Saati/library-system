@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { AvailabilityBadge } from '../../components/AvailabilityBadge'
 import { BackLink } from '../../components/BackLink'
 import { useBookQuery } from '../../hooks/useBookQuery'
+import { paths } from '../../routes/paths'
 import { formatBookYear, getAvailabilityStatus } from '../../types/book'
 
 export function BookPage() {
@@ -27,7 +28,7 @@ export function BookPage() {
   }
 
   if (isError || !book) {
-    return <Navigate to="/" replace />
+    return <Navigate to={paths.home} replace />
   }
 
   const yearLabel = formatBookYear(book.year, t('book.bce'))
@@ -50,7 +51,7 @@ export function BookPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <BackLink to="/">{t('book.backToCatalog')}</BackLink>
+      <BackLink to={paths.home}>{t('book.backToCatalog')}</BackLink>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
         <div className="mx-auto w-full max-w-xs lg:mx-0">
@@ -95,13 +96,13 @@ export function BookPage() {
             {isAvailable ? (
               <>
                 <Link
-                  to={`/checkout/${book.id}?action=buy`}
+                  to={paths.checkout(book.id, 'buy')}
                   className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
                 >
                   {t('book.buyNow')}
                 </Link>
                 <Link
-                  to={`/checkout/${book.id}?action=borrow`}
+                  to={paths.checkout(book.id, 'borrow')}
                   className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
                 >
                   {t('book.borrowNow')}

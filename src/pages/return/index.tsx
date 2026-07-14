@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Navigate, useParams } from 'react-router-dom'
 import { AvailabilityBadge } from '../../components/AvailabilityBadge'
 import { BackLink } from '../../components/BackLink'
+import { paths } from '../../routes/paths'
 import { ReturnBookForm } from './components/ReturnBookForm'
 import { useLoanQuery } from './hooks/useLoanQuery'
 
@@ -22,7 +23,7 @@ export function ReturnPage() {
   }
 
   if (isError || !loan || !loan.book) {
-    return <Navigate to="/books" replace />
+    return <Navigate to={paths.shelf} replace />
   }
 
   const book = loan.book
@@ -33,7 +34,7 @@ export function ReturnPage() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <BackLink to="/books">{t('return.backToShelf')}</BackLink>
+      <BackLink to={paths.shelf}>{t('return.backToShelf')}</BackLink>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)] lg:gap-12">
         <div className="mx-auto w-full max-w-xs lg:mx-0">

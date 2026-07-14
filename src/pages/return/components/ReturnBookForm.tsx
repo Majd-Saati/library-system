@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../../api'
 import { ErrorMessage } from '../../../components/ErrorMessage'
+import { paths } from '../../../routes/paths'
 import type { Book } from '../../../types/book'
 import type { Loan } from '../../../types/loan'
 import { useReturnLoanMutation } from '../hooks/useReturnLoanMutation'
@@ -26,11 +27,18 @@ export function ReturnBookForm({ book, loan }: ReturnBookFormProps) {
   const returnMutation = useReturnLoanMutation()
   const validationSchema = createReturnSchema(t, loan.email)
 
-  async function handleSubmit(_values: ReturnFormValues) {
+  async function handleSubmit(values: ReturnFormValues) {
     try {
-      await returnMutation.mutateAsync(loan.id)
+      await returnMutation.mutateAsync({
+        loanId: loan.id,
+        body: {
+          email: values.email.trim(),
+          conditionNotes: values.conditionNotes.trim(),
+          confirmReturn: values.confirmReturn,
+        },
+      })
       toast.success(t('return.toast.success', { title: book.title }))
-      navigate('/books')
+      navigate(paths.shelf)
     } catch (error) {
       toast.error(getErrorMessage(error, t('return.toast.failed')))
     }
@@ -122,7 +130,7 @@ export function ReturnBookForm({ book, loan }: ReturnBookFormProps) {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/books')}
+              onClick={() => navigate(paths.shelf)}
               className="rounded-xl bg-brand-light px-5 py-2.5 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white dark:hover:text-page"
             >
               {t('return.cancel')}

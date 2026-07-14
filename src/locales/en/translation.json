@@ -66,7 +66,10 @@
     "clearAria": "Clear search",
     "suggestions": "Book suggestions",
     "noMatches": "No matching books found.",
-    "searching": "Searching…"
+    "searching": "Searching…",
+    "borrow": "Borrow",
+    "unavailable": "Unavailable",
+    "unavailableHint": "This book is checked out and cannot be borrowed."
   },
   "book": {
     "buyNow": "Buy now",

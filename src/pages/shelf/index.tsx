@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { AvailabilityBadge } from '../../components/AvailabilityBadge'
 import { useLoansQuery } from '../../hooks/useLoansQuery'
+import { paths } from '../../routes/paths'
 import { useAppSelector } from '../../store/hooks'
 import { selectIsAuthenticated } from '../../store/slices/authSlice'
 
@@ -16,8 +17,8 @@ export function BooksPage() {
         <h1 className="font-display text-4xl text-ink">{t('shelf.title')}</h1>
         <p className="mt-2 text-muted">{t('shelf.loginRequired')}</p>
         <Link
-          to="/login"
-          state={{ from: '/books' }}
+          to={paths.login}
+          state={{ from: paths.shelf }}
           className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page"
         >
           {t('app.login')}
@@ -62,7 +63,7 @@ export function BooksPage() {
           <p className="text-lg font-semibold text-ink">{t('shelf.emptyTitle')}</p>
           <p className="mt-2 text-muted">{t('shelf.emptySubtitle')}</p>
           <Link
-            to="/"
+            to={paths.home}
             className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
           >
             {t('shelf.browseCatalog')}
@@ -92,7 +93,7 @@ export function BooksPage() {
                   />
                   <div>
                     <Link
-                      to={`/book/${book.id}`}
+                      to={paths.book(book.id)}
                       className="font-display text-xl text-ink transition hover:text-accent"
                     >
                       {book.title}
@@ -111,7 +112,7 @@ export function BooksPage() {
                 </div>
 
                 <Link
-                  to={`/return/${loan.id}`}
+                  to={paths.returnLoan(loan.id)}
                   className="inline-flex items-center justify-center rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
                 >
                   {t('shelf.returnBook')}

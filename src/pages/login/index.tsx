@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../api'
 import { ErrorMessage } from '../../components/ErrorMessage'
+import { paths } from '../../routes/paths'
 import { useAppSelector } from '../../store/hooks'
 import { selectIsAuthenticated } from '../../store/slices/authSlice'
 import { useLoginMutation } from './hooks/useLoginMutation'
@@ -28,7 +29,7 @@ export function LoginPage() {
   const from =
     (location.state as { from?: string } | null)?.from ||
     new URLSearchParams(location.search).get('redirect') ||
-    '/'
+    paths.home
 
   if (isAuthenticated) {
     return <Navigate to={from} replace />
@@ -145,7 +146,7 @@ export function LoginPage() {
         </Formik>
 
         <p className="mt-6 text-center text-sm text-muted">
-          <Link to="/" className="font-semibold text-brand hover:text-accent">
+          <Link to={paths.home} className="font-semibold text-brand hover:text-accent">
             {t('login.backHome')}
           </Link>
         </p>

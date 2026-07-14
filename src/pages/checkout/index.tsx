@@ -4,6 +4,7 @@ import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-r
 import { AvailabilityBadge } from '../../components/AvailabilityBadge'
 import { BackLink } from '../../components/BackLink'
 import { useBookQuery } from '../../hooks/useBookQuery'
+import { paths } from '../../routes/paths'
 import { getAvailabilityStatus } from '../../types/book'
 import { BookActionForm } from './components/BookActionForm'
 import type { BookActionType } from './validation/checkoutSchema'
@@ -21,7 +22,7 @@ export function CheckoutPage() {
   const { data: book, isLoading, isError } = useBookQuery(bookId)
 
   if (!isBookAction(actionParam)) {
-    return <Navigate to="/" replace />
+    return <Navigate to={paths.home} replace />
   }
 
   if (isLoading) {
@@ -36,16 +37,16 @@ export function CheckoutPage() {
   }
 
   if (isError || !book) {
-    return <Navigate to="/" replace />
+    return <Navigate to={paths.home} replace />
   }
 
   const action = actionParam
-  const backTo = `/book/${book.id}`
+  const backTo = paths.book(book.id)
   const isAvailable = getAvailabilityStatus(book) === 'available'
   const blocked = !isAvailable
 
   function handleDone() {
-    navigate(action === 'borrow' ? '/books' : backTo)
+    navigate(action === 'borrow' ? paths.shelf : backTo)
   }
 
   return (
@@ -103,7 +104,7 @@ export function CheckoutPage() {
                       : t('checkout.blocked.buyBody', { title: book.title })}
                   </p>
                   <Link
-                    to="/"
+                    to={paths.home}
                     className="mt-4 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page"
                   >
                     {t('checkout.blocked.browse')}

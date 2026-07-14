@@ -6,9 +6,11 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { MagnifyingGlass, X } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import type { Book } from '../../../types/book'
 import { AvailabilityBadge } from '../../../components/AvailabilityBadge'
+import { paths } from '../../../routes/paths'
+import { getAvailabilityStatus, type Book } from '../../../types/book'
 
 interface BookSearchProps {
   query: string
@@ -165,22 +167,26 @@ export function BookSearch({
           ) : (
             suggestions.map((book, index) => {
               const isActive = index === activeIndex
+              const isAvailable = getAvailabilityStatus(book) === 'available'
 
               return (
-                <li key={book.id} role="presentation">
+                <li
+                  key={book.id}
+                  id={`${listboxId}-option-${index}`}
+                  role="option"
+                  aria-selected={isActive}
+                  className={[
+                    'flex items-center gap-3 rounded-xl px-3 py-2.5 transition',
+                    isActive
+                      ? 'bg-brand-light text-ink'
+                      : 'hover:bg-accent-light/70',
+                  ].join(' ')}
+                  onMouseEnter={() => setActiveIndex(index)}
+                >
                   <button
-                    id={`${listboxId}-option-${index}`}
                     type="button"
-                    role="option"
-                    aria-selected={isActive}
-                    onMouseEnter={() => setActiveIndex(index)}
                     onClick={() => handleSelect(book)}
-                    className={[
-                      'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-start transition',
-                      isActive
-                        ? 'bg-brand-light text-ink'
-                        : 'hover:bg-accent-light/70',
-                    ].join(' ')}
+                    className="flex min-w-0 flex-1 items-center gap-3 text-start"
                   >
                     <img
                       src={book.coverUrl}
@@ -197,6 +203,23 @@ export function BookSearch({
                     </span>
                     <AvailabilityBadge book={book} />
                   </button>
+
+                  {isAvailable ? (
+                    <Link
+                      to={paths.checkout(book.id, 'borrow')}
+                      onClick={() => setIsOpen(false)}
+                      className="shrink-0 rounded-lg bg-brand px-2.5 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-dark dark:text-page"
+                    >
+                      {t('search.borrow')}
+                    </Link>
+                  ) : (
+                    <span
+                      className="shrink-0 rounded-lg bg-brand-light px-2.5 py-1.5 text-xs font-semibold text-muted"
+                      title={t('search.unavailableHint')}
+                    >
+                      {t('search.unavailable')}
+                    </span>
+                  )}
                 </li>
               )
             })

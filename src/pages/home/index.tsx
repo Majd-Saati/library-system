@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { paths } from '../../routes/paths'
 import { BookCard } from './components/BookCard'
 import { BookGridSkeleton } from './components/BookCardSkeleton'
 import { BookSearch } from './components/BookSearch'
@@ -42,7 +43,7 @@ export function HomePage() {
           query={query}
           suggestions={suggestions}
           onQueryChange={setQuery}
-          onSelect={(book) => navigate(`/book/${book.id}`)}
+          onSelect={(book) => navigate(paths.book(book.id))}
           onClear={clearQuery}
           disabled={isCatalogLoading}
           isLoading={isSearchLoading}

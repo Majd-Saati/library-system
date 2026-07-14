@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useLoansQuery } from '../hooks/useLoansQuery'
+import { paths } from '../routes/paths'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   logout,
@@ -40,7 +41,7 @@ export function Layout() {
   function handleLogout() {
     dispatch(logout())
     toast.success(t('login.toast.logout'))
-    navigate('/')
+    navigate(paths.home)
   }
 
   const initials = user?.name
@@ -59,7 +60,7 @@ export function Layout() {
 
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
           <Link
-            to="/"
+            to={paths.home}
             className="group flex min-w-0 items-center gap-3 transition"
           >
             <BrandMark />
@@ -77,10 +78,10 @@ export function Layout() {
             className="hidden items-center gap-1 rounded-2xl bg-brand-light/60 p-1 ring-1 ring-border/70 md:flex"
             aria-label={t('app.navLabel')}
           >
-            <NavLink to="/" end className={linkClass}>
+            <NavLink to={paths.home} end className={linkClass}>
               {t('app.home')}
             </NavLink>
-            <NavLink to="/books" className={linkClass}>
+            <NavLink to={paths.shelf} className={linkClass}>
               <span className="inline-flex items-center gap-2">
                 {t('app.myShelf')}
                 {loanCount > 0 && (
@@ -125,7 +126,7 @@ export function Layout() {
               </div>
             ) : (
               <NavLink
-                to="/login"
+                to={paths.login}
                 className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_-14px_rgba(196,122,44,0.9)] transition hover:bg-accent-dark dark:text-page"
               >
                 <SignIn size={16} weight="bold" aria-hidden />
@@ -138,10 +139,10 @@ export function Layout() {
         <div className="border-t border-border/60 px-4 py-2 sm:px-6 md:hidden lg:px-8">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-2">
             <nav className="flex items-center gap-1" aria-label={t('app.navLabel')}>
-              <NavLink to="/" end className={linkClass}>
+              <NavLink to={paths.home} end className={linkClass}>
                 {t('app.home')}
               </NavLink>
-              <NavLink to="/books" className={linkClass}>
+              <NavLink to={paths.shelf} className={linkClass}>
                 <span className="inline-flex items-center gap-2">
                   {t('app.myShelf')}
                   {loanCount > 0 && (

@@ -6,7 +6,17 @@ export function useReturnLoanMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (loanId: string) => loansApi.returnLoan(loanId),
+    mutationFn: ({
+      loanId,
+      body,
+    }: {
+      loanId: string
+      body: {
+        email: string
+        conditionNotes?: string
+        confirmReturn: boolean
+      }
+    }) => loansApi.returnLoan(loanId, body),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['books'] })
       void queryClient.invalidateQueries({ queryKey: queryKeys.loans.all })
