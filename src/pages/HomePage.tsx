@@ -4,12 +4,10 @@ import { BookCard } from '../components/BookCard'
 import { BookGridSkeleton } from '../components/BookCardSkeleton'
 import { BookSearch } from '../components/BookSearch'
 import { useBookSearch } from '../hooks/useBookSearch'
-import { useBooksQuery } from '../hooks/queries/useBooksQuery'
 
 export function HomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { data: books = [], isLoading, isError, error, refetch } = useBooksQuery()
   const {
     query,
     setQuery,
@@ -17,7 +15,13 @@ export function HomePage() {
     filteredBooks,
     clearQuery,
     hasQuery,
-  } = useBookSearch(books)
+    isSearchLoading,
+    isCatalogLoading,
+    isCatalogError,
+    catalogError,
+    refetchCatalog,
+    catalogCount,
+  } = useBookSearch()
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -40,31 +44,36 @@ export function HomePage() {
           onQueryChange={setQuery}
           onSelect={(book) => navigate(`/book/${book.id}`)}
           onClear={clearQuery}
-          disabled={isLoading}
+          disabled={isCatalogLoading}
+          isLoading={isSearchLoading}
         />
         <p className="mt-3 text-sm text-muted" aria-live="polite">
-          {isLoading
+          {isCatalogLoading
             ? t('home.loading')
-            : hasQuery
-              ? t('home.resultsFor', {
-                  count: filteredBooks.length,
-                  query: query.trim(),
-                })
-              : t('home.catalogCount', { count: books.length })}
+            : isSearchLoading
+              ? t('search.searching')
+              : hasQuery
+                ? t('home.resultsFor', {
+                    count: filteredBooks.length,
+                    query: query.trim(),
+                  })
+                : t('home.catalogCount', { count: catalogCount })}
         </p>
       </div>
 
-      {isLoading ? (
+      {isCatalogLoading || (hasQuery && isSearchLoading) ? (
         <BookGridSkeleton />
-      ) : isError ? (
+      ) : isCatalogError ? (
         <div className="rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
           <p className="text-lg font-semibold text-ink">{t('home.errorTitle')}</p>
           <p className="mt-2 text-muted">
-            {error instanceof Error ? error.message : t('home.errorSubtitle')}
+            {catalogError instanceof Error
+              ? catalogError.message
+              : t('home.errorSubtitle')}
           </p>
           <button
             type="button"
-            onClick={() => void refetch()}
+            onClick={() => void refetchCatalog()}
             className="mt-5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
           >
             {t('home.retry')}

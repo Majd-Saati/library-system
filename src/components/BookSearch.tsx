@@ -7,6 +7,7 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Book } from '../types/book'
+import { AvailabilityBadge } from './AvailabilityBadge'
 
 interface BookSearchProps {
   query: string
@@ -15,6 +16,7 @@ interface BookSearchProps {
   onSelect: (book: Book) => void
   onClear: () => void
   disabled?: boolean
+  isLoading?: boolean
 }
 
 export function BookSearch({
@@ -24,6 +26,7 @@ export function BookSearch({
   onSelect,
   onClear,
   disabled = false,
+  isLoading = false,
 }: BookSearchProps) {
   const { t } = useTranslation()
   const listboxId = useId()
@@ -35,7 +38,7 @@ export function BookSearch({
 
   useEffect(() => {
     setActiveIndex(-1)
-  }, [query])
+  }, [query, suggestions])
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {
@@ -160,16 +163,15 @@ export function BookSearch({
           aria-label={t('search.suggestions')}
           className="absolute z-30 mt-2 max-h-80 w-full overflow-auto rounded-2xl border border-border bg-surface p-2 shadow-[0_18px_40px_-20px_rgba(27,79,114,0.55)] dark:shadow-[0_18px_40px_-20px_rgba(0,0,0,0.65)]"
         >
-          {suggestions.length === 0 ? (
+          {isLoading ? (
+            <li className="px-3 py-3 text-sm text-muted">{t('search.searching')}</li>
+          ) : suggestions.length === 0 ? (
             <li className="px-3 py-3 text-sm text-muted">
               {t('search.noMatches')}
             </li>
           ) : (
             suggestions.map((book, index) => {
               const isActive = index === activeIndex
-              const genreLabel = t(`genres.${book.genre}`, {
-                defaultValue: book.genre,
-              })
 
               return (
                 <li key={book.id} role="presentation">
@@ -192,14 +194,15 @@ export function BookSearch({
                       alt=""
                       className="h-12 w-8 shrink-0 rounded object-cover ring-1 ring-border"
                     />
-                    <span className="min-w-0">
+                    <span className="min-w-0 flex-1">
                       <span className="block truncate font-semibold text-ink">
                         {book.title}
                       </span>
                       <span className="block truncate text-sm text-muted">
-                        {book.author} · {genreLabel}
+                        {book.author} · ISBN {book.isbn}
                       </span>
                     </span>
+                    <AvailabilityBadge book={book} />
                   </button>
                 </li>
               )

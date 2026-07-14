@@ -3,8 +3,15 @@ import { apiClient } from './client'
 import type { ApiSuccess } from './types'
 
 export const booksApi = {
-  getAll() {
-    return apiClient<ApiSuccess<{ books: Book[] }>>('/books', {
+  getAll(query?: string) {
+    const trimmed = query?.trim()
+    const path = trimmed
+      ? `/books?${new URLSearchParams({ q: trimmed }).toString()}`
+      : '/books'
+
+    return apiClient<
+      ApiSuccess<{ query: string | null; count: number; books: Book[] }>
+    >(path, {
       auth: false,
     }).then((res) => res.data.books)
   },

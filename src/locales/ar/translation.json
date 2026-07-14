@@ -63,12 +63,13 @@
     "clearSearch": "مسح البحث"
   },
   "search": {
-    "label": "ابحث عن الكتب حسب العنوان أو المؤلف أو النوع",
-    "placeholder": "ابحث بالعنوان أو المؤلف أو النوع…",
+    "label": "ابحث عن الكتب حسب العنوان أو المؤلف أو ردمك",
+    "placeholder": "ابحث بالعنوان أو المؤلف أو ردمك…",
     "clear": "مسح",
     "clearAria": "مسح البحث",
     "suggestions": "اقتراحات الكتب",
-    "noMatches": "لا توجد كتب مطابقة."
+    "noMatches": "لا توجد كتب مطابقة.",
+    "searching": "جارٍ البحث…"
   },
   "book": {
     "buyNow": "اشترِ الآن",
@@ -81,6 +82,10 @@
     "purchaseStarted": "بدأ شراء ”{{title}}“.",
     "borrowStarted": "تم تقديم طلب استعارة ”{{title}}“.",
     "bce": "ق.م",
+    "availability": {
+      "available": "متاح",
+      "checkedOut": "مُعار"
+    },
     "details": {
       "author": "المؤلف",
       "genre": "النوع",
@@ -89,7 +94,8 @@
       "language": "اللغة",
       "publisher": "الناشر",
       "isbn": "ردمك",
-      "availableCopies": "النسخ المتاحة"
+      "availableCopies": "النسخ المتاحة",
+      "availability": "الحالة"
     }
   },
   "checkout": {

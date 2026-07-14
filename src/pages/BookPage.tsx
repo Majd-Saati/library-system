@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { useBookQuery } from '../hooks/queries/useBookQuery'
 import { formatBookYear } from '../types/book'
 
@@ -85,6 +86,7 @@ export function BookPage() {
             <span className="rounded-full bg-accent-light px-3 py-1 text-sm font-semibold text-accent-dark">
               {t('book.rating', { rating: book.rating.toFixed(1) })}
             </span>
+            <AvailabilityBadge book={book} />
             <span className="rounded-full bg-brand-light px-3 py-1 text-sm font-semibold text-brand">
               {t('book.copiesAvailable', { count: book.availableCopies })}
             </span>

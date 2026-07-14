@@ -1,7 +1,7 @@
 export const queryKeys = {
   books: {
-    all: ['books'] as const,
-    detail: (id: string) => ['books', id] as const,
+    all: (query = '') => ['books', query] as const,
+    detail: (id: string) => ['books', 'detail', id] as const,
   },
   auth: {
     me: ['auth', 'me'] as const,

@@ -63,12 +63,13 @@
     "clearSearch": "Clear search"
   },
   "search": {
-    "label": "Search books by title, author, or genre",
-    "placeholder": "Search by title, author, or genre…",
+    "label": "Search books by title, author, or ISBN",
+    "placeholder": "Search by title, author, or ISBN…",
     "clear": "Clear",
     "clearAria": "Clear search",
     "suggestions": "Book suggestions",
-    "noMatches": "No matching books found."
+    "noMatches": "No matching books found.",
+    "searching": "Searching…"
   },
   "book": {
     "buyNow": "Buy now",
@@ -81,6 +82,10 @@
     "purchaseStarted": "Purchase started for “{{title}}”.",
     "borrowStarted": "Borrow request placed for “{{title}}”.",
     "bce": "BCE",
+    "availability": {
+      "available": "Available",
+      "checkedOut": "Checked out"
+    },
     "details": {
       "author": "Author",
       "genre": "Genre",
@@ -89,7 +94,8 @@
       "language": "Language",
       "publisher": "Publisher",
       "isbn": "ISBN",
-      "availableCopies": "Available copies"
+      "availableCopies": "Available copies",
+      "availability": "Availability"
     }
   },
   "checkout": {

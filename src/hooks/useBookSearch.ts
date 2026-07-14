@@ -1,31 +1,13 @@
-import { useDeferredValue, useMemo, useState } from 'react'
-import type { Book } from '../types/book'
-import { searchBooks } from '../utils/searchBooks'
+import { useDeferredValue, useState } from 'react'
+import { useBooksQuery } from './queries/useBooksQuery'
 
-const SUGGESTION_LIMIT = 6
-
-export function useBookSearch(catalog: Book[]) {
+export function useBookSearch() {
   const [query, setQuery] = useState('')
-  const deferredQuery = useDeferredValue(query)
+  const deferredQuery = useDeferredValue(query.trim())
+  const hasQuery = query.trim().length > 0
 
-  const results = useMemo(
-    () => searchBooks(catalog, deferredQuery),
-    [catalog, deferredQuery],
-  )
-
-  const suggestions = useMemo(
-    () => searchBooks(catalog, query, SUGGESTION_LIMIT).map((result) => result.book),
-    [catalog, query],
-  )
-
-  const filteredBooks = useMemo(
-    () => (deferredQuery.trim() ? results.map((result) => result.book) : catalog),
-    [catalog, deferredQuery, results],
-  )
-
-  function selectBook(book: Book) {
-    setQuery(book.title)
-  }
+  const booksQuery = useBooksQuery(deferredQuery)
+  const books = booksQuery.data ?? []
 
   function clearQuery() {
     setQuery('')
@@ -34,11 +16,17 @@ export function useBookSearch(catalog: Book[]) {
   return {
     query,
     setQuery,
-    suggestions,
-    filteredBooks,
-    selectBook,
+    suggestions: hasQuery ? books.slice(0, 8) : [],
+    filteredBooks: books,
     clearQuery,
-    isSearching: query !== deferredQuery,
-    hasQuery: query.trim().length > 0,
+    hasQuery,
+    isSearchLoading:
+      hasQuery && (booksQuery.isFetching || query.trim() !== deferredQuery),
+    isCatalogLoading: !hasQuery && booksQuery.isLoading,
+    isCatalogError: booksQuery.isError,
+    catalogError: booksQuery.error,
+    refetchCatalog: booksQuery.refetch,
+    catalogCount: books.length,
+    isSearchError: hasQuery && booksQuery.isError,
   }
 }
