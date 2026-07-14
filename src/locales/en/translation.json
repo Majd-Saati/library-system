@@ -81,7 +81,8 @@
     "bce": "BCE",
     "availability": {
       "available": "Available",
-      "checkedOut": "Checked out"
+      "checkedOut": "Checked out",
+      "outOfStock": "Out of stock"
     },
     "details": {
       "author": "Author",
@@ -107,11 +108,24 @@
       "address": "Address"
     },
     "submit": "Submit",
+    "submitBuy": "Confirm purchase",
+    "submitBorrow": "Confirm borrow",
+    "submitting": "Processing…",
     "cancel": "Cancel",
+    "blocked": {
+      "borrowTitle": "This book cannot be borrowed",
+      "borrowBody": "“{{title}}” is checked out. All copies are currently on loan.",
+      "buyTitle": "This book is out of stock",
+      "buyBody": "“{{title}}” has no copies left to purchase right now.",
+      "browse": "Browse other books"
+    },
     "toast": {
-      "buySuccess": "Purchase request submitted for “{{title}}”.",
-      "borrowSuccess": "Borrow request submitted for “{{title}}”.",
-      "unavailable": "“{{title}}” has no copies left to borrow."
+      "buySuccess": "Purchase completed for “{{title}}”.",
+      "borrowSuccess": "You borrowed “{{title}}”.",
+      "buyFailed": "Purchase failed. Please try again.",
+      "borrowFailed": "Borrow failed. Please try again.",
+      "unavailable": "“{{title}}” has no copies left to borrow.",
+      "outOfStock": "“{{title}}” is out of stock."
     },
     "errors": {
       "fullNameRequired": "Full name is required.",
@@ -131,7 +145,9 @@
     "emptySubtitle": "Borrow a title from the catalog to see it here.",
     "browseCatalog": "Browse catalog",
     "returnBook": "Return book",
-    "borrowedBy": "Borrowed by {{name}} on {{date}}"
+    "borrowedBy": "Borrowed by {{name}} on {{date}}",
+    "loginRequired": "Log in to see books you have borrowed.",
+    "errorTitle": "Could not load your loans"
   },
   "return": {
     "eyebrow": "Return",
@@ -139,6 +155,7 @@
     "subtitle": "Confirm your email and return “{{title}}” to the library.",
     "backToShelf": "Back to my shelf",
     "submit": "Confirm return",
+    "submitting": "Returning…",
     "cancel": "Cancel",
     "fields": {
       "email": "Borrower email",
@@ -152,7 +169,8 @@
       "borrowedAt": "Borrowed on"
     },
     "toast": {
-      "success": "“{{title}}” was returned successfully."
+      "success": "“{{title}}” was returned successfully.",
+      "failed": "Return failed. Please try again."
     },
     "errors": {
       "emailRequired": "Email is required.",

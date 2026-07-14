@@ -1,22 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import { Navigate, useParams } from 'react-router-dom'
+import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { BackLink } from '../components/BackLink'
 import { ReturnBookForm } from '../components/ReturnBookForm'
-import { useBookQuery } from '../hooks/queries/useBookQuery'
-import { useAppSelector } from '../store/hooks'
-import { selectLoanById } from '../store/slices/loansSlice'
+import { useLoanQuery } from '../hooks/queries/useLoansQuery'
 
 export function ReturnPage() {
   const { t, i18n } = useTranslation()
   const { loanId } = useParams<{ loanId: string }>()
-  const loan = useAppSelector((state) =>
-    loanId ? selectLoanById(state, loanId) : undefined,
-  )
-  const { data: book, isLoading, isError } = useBookQuery(loan?.bookId)
-
-  if (!loan) {
-    return <Navigate to="/books" replace />
-  }
+  const { data: loan, isLoading, isError } = useLoanQuery(loanId)
 
   if (isLoading) {
     return (
@@ -29,10 +21,11 @@ export function ReturnPage() {
     )
   }
 
-  if (isError || !book) {
+  if (isError || !loan || !loan.book) {
     return <Navigate to="/books" replace />
   }
 
+  const book = loan.book
   const borrowedDate = new Date(loan.borrowedAt).toLocaleDateString(
     i18n.language,
     { year: 'numeric', month: 'long', day: 'numeric' },
@@ -53,6 +46,9 @@ export function ReturnPage() {
           </div>
           <p className="mt-4 font-display text-xl text-ink">{book.title}</p>
           <p className="mt-1 text-sm text-muted">{book.author}</p>
+          <div className="mt-3">
+            <AvailabilityBadge book={book} />
+          </div>
           <dl className="mt-4 space-y-2 text-sm">
             <div>
               <dt className="text-muted">{t('return.loan.borrower')}</dt>

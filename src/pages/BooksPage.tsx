@@ -1,37 +1,41 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { useBooksQuery } from '../hooks/queries/useBooksQuery'
+import { AvailabilityBadge } from '../components/AvailabilityBadge'
+import { useLoansQuery } from '../hooks/queries/useLoansQuery'
 import { useAppSelector } from '../store/hooks'
-import { selectLoans } from '../store/slices/loansSlice'
+import { selectIsAuthenticated } from '../store/slices/authSlice'
 
 export function BooksPage() {
   const { t, i18n } = useTranslation()
-  const loans = useAppSelector(selectLoans)
-  const { data: books = [], isLoading } = useBooksQuery()
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const { data: loans = [], isLoading, isError, refetch } = useLoansQuery()
 
-  const booksById = new Map(books.map((book) => [book.id, book]))
+  if (!isAuthenticated) {
+    return (
+      <section className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <h1 className="font-display text-4xl text-ink">{t('shelf.title')}</h1>
+        <p className="mt-2 text-muted">{t('shelf.loginRequired')}</p>
+        <Link
+          to="/login"
+          state={{ from: '/books' }}
+          className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page"
+        >
+          {t('app.login')}
+        </Link>
+      </section>
+    )
+  }
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
       <h1 className="font-display text-4xl text-ink">{t('shelf.title')}</h1>
       <p className="mt-2 text-muted">{t('shelf.subtitle')}</p>
 
-      {loans.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
-          <p className="text-lg font-semibold text-ink">{t('shelf.emptyTitle')}</p>
-          <p className="mt-2 text-muted">{t('shelf.emptySubtitle')}</p>
-          <Link
-            to="/"
-            className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
-          >
-            {t('shelf.browseCatalog')}
-          </Link>
-        </div>
-      ) : isLoading ? (
+      {isLoading ? (
         <ul className="mt-8 space-y-4">
-          {loans.map((loan) => (
+          {Array.from({ length: 3 }, (_, index) => (
             <li
-              key={loan.id}
+              key={index}
               className="flex animate-pulse gap-4 rounded-2xl bg-surface p-4 ring-1 ring-border"
             >
               <div className="h-28 w-20 rounded-lg bg-brand-light" />
@@ -42,10 +46,32 @@ export function BooksPage() {
             </li>
           ))}
         </ul>
+      ) : isError ? (
+        <div className="mt-10 rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
+          <p className="text-lg font-semibold text-ink">{t('shelf.errorTitle')}</p>
+          <button
+            type="button"
+            onClick={() => void refetch()}
+            className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white dark:text-page"
+          >
+            {t('home.retry')}
+          </button>
+        </div>
+      ) : loans.length === 0 ? (
+        <div className="mt-10 rounded-2xl border border-dashed border-border bg-surface/70 px-6 py-16 text-center">
+          <p className="text-lg font-semibold text-ink">{t('shelf.emptyTitle')}</p>
+          <p className="mt-2 text-muted">{t('shelf.emptySubtitle')}</p>
+          <Link
+            to="/"
+            className="mt-5 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
+          >
+            {t('shelf.browseCatalog')}
+          </Link>
+        </div>
       ) : (
         <ul className="mt-8 space-y-4">
           {loans.map((loan) => {
-            const book = booksById.get(loan.bookId)
+            const book = loan.book
             if (!book) return null
 
             const borrowedDate = new Date(loan.borrowedAt).toLocaleDateString(
@@ -78,6 +104,9 @@ export function BooksPage() {
                         date: borrowedDate,
                       })}
                     </p>
+                    <div className="mt-2">
+                      <AvailabilityBadge book={book} />
+                    </div>
                   </div>
                 </div>
 

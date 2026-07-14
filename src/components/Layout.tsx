@@ -2,13 +2,13 @@ import { BookOpen, SignIn, SignOut } from '@phosphor-icons/react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
+import { useLoansQuery } from '../hooks/queries/useLoansQuery'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   logout,
   selectAuthUser,
   selectIsAuthenticated,
 } from '../store/slices/authSlice'
-import { selectLoans } from '../store/slices/loansSlice'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
@@ -26,7 +26,8 @@ export function Layout() {
   const navigate = useNavigate()
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const user = useAppSelector(selectAuthUser)
-  const loanCount = useAppSelector(selectLoans).length
+  const { data: loans = [] } = useLoansQuery()
+  const loanCount = loans.length
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     [

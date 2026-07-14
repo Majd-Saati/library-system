@@ -2,10 +2,10 @@ import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { getErrorMessage } from '../api'
+import { useReturnLoanMutation } from '../hooks/mutations/useReturnLoanMutation'
 import type { Book } from '../types/book'
-import type { Loan } from '../store/slices/loansSlice'
-import { returnBook } from '../store/slices/loansSlice'
-import { useAppDispatch } from '../store/hooks'
+import type { Loan } from '../types/loan'
 import {
   createReturnSchema,
   returnInitialValues,
@@ -22,29 +22,18 @@ const ERROR_COLOR = '#c0392b'
 
 export function ReturnBookForm({ book, loan }: ReturnBookFormProps) {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const returnMutation = useReturnLoanMutation()
   const validationSchema = createReturnSchema(t, loan.email)
 
-  function handleSubmit(values: ReturnFormValues) {
-    console.log({
-      action: 'return',
-      loanId: loan.id,
-      book: {
-        id: book.id,
-        title: book.title,
-        author: book.author,
-      },
-      borrower: {
-        fullName: loan.fullName,
-        email: loan.email,
-      },
-      returnDetails: values,
-    })
-
-    dispatch(returnBook(loan.id))
-    toast.success(t('return.toast.success', { title: book.title }))
-    navigate('/books')
+  async function handleSubmit(_values: ReturnFormValues) {
+    try {
+      await returnMutation.mutateAsync(loan.id)
+      toast.success(t('return.toast.success', { title: book.title }))
+      navigate('/books')
+    } catch (error) {
+      toast.error(getErrorMessage(error, t('return.toast.failed')))
+    }
   }
 
   return (
@@ -124,10 +113,12 @@ export function ReturnBookForm({ book, loan }: ReturnBookFormProps) {
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || returnMutation.isPending}
               className="rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60 dark:text-page dark:hover:bg-brand/80"
             >
-              {t('return.submit')}
+              {returnMutation.isPending
+                ? t('return.submitting')
+                : t('return.submit')}
             </button>
             <button
               type="button"

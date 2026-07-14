@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { BackLink } from '../components/BackLink'
 import { useBookQuery } from '../hooks/queries/useBookQuery'
-import { formatBookYear } from '../types/book'
+import { formatBookYear, getAvailabilityStatus } from '../types/book'
 
 export function BookPage() {
   const { t } = useTranslation()
@@ -32,6 +32,7 @@ export function BookPage() {
 
   const yearLabel = formatBookYear(book.year, t('book.bce'))
   const genreLabel = t(`genres.${book.genre}`, { defaultValue: book.genre })
+  const isAvailable = getAvailabilityStatus(book) === 'available'
 
   const details = [
     { label: t('book.details.author'), value: book.author },
@@ -91,18 +92,31 @@ export function BookPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to={`/checkout/${book.id}?action=buy`}
-              className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
-            >
-              {t('book.buyNow')}
-            </Link>
-            <Link
-              to={`/checkout/${book.id}?action=borrow`}
-              className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
-            >
-              {t('book.borrowNow')}
-            </Link>
+            {isAvailable ? (
+              <>
+                <Link
+                  to={`/checkout/${book.id}?action=buy`}
+                  className="rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
+                >
+                  {t('book.buyNow')}
+                </Link>
+                <Link
+                  to={`/checkout/${book.id}?action=borrow`}
+                  className="rounded-xl bg-brand px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
+                >
+                  {t('book.borrowNow')}
+                </Link>
+              </>
+            ) : (
+              <>
+                <span className="rounded-xl bg-accent-light px-5 py-3 text-sm font-semibold text-accent-dark">
+                  {t('book.availability.outOfStock')}
+                </span>
+                <span className="rounded-xl bg-brand-light px-5 py-3 text-sm font-semibold text-muted">
+                  {t('book.availability.checkedOut')}
+                </span>
+              </>
+            )}
           </div>
 
           <dl className="mt-10 grid gap-4 sm:grid-cols-2">

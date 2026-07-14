@@ -53,23 +53,30 @@ export function BookCard({ book }: BookCardProps) {
         </div>
 
         <div className="grid grid-cols-2 gap-2">
-          <Link
-            to={`/checkout/${book.id}?action=buy`}
-            className="rounded-xl bg-accent px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
-          >
-            {t('book.buyNow')}
-          </Link>
           {isAvailable ? (
-            <Link
-              to={`/checkout/${book.id}?action=borrow`}
-              className="rounded-xl bg-brand px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
-            >
-              {t('book.borrowNow')}
-            </Link>
+            <>
+              <Link
+                to={`/checkout/${book.id}?action=buy`}
+                className="rounded-xl bg-accent px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
+              >
+                {t('book.buyNow')}
+              </Link>
+              <Link
+                to={`/checkout/${book.id}?action=borrow`}
+                className="rounded-xl bg-brand px-3 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand dark:text-page dark:hover:bg-brand/80"
+              >
+                {t('book.borrowNow')}
+              </Link>
+            </>
           ) : (
-            <span className="rounded-xl bg-brand-light px-3 py-2.5 text-center text-sm font-semibold text-muted">
-              {t('book.availability.checkedOut')}
-            </span>
+            <>
+              <span className="rounded-xl bg-accent-light px-3 py-2.5 text-center text-sm font-semibold text-accent-dark">
+                {t('book.availability.outOfStock')}
+              </span>
+              <span className="rounded-xl bg-brand-light px-3 py-2.5 text-center text-sm font-semibold text-muted">
+                {t('book.availability.checkedOut')}
+              </span>
+            </>
           )}
         </div>
       </div>

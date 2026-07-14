@@ -1,14 +1,13 @@
 import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import type { Book } from '../types/book'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { getErrorMessage } from '../api'
+import { useBuyMutation } from '../hooks/mutations/useBuyMutation'
+import { useBorrowMutation } from '../hooks/mutations/useBorrowMutation'
+import { useAppSelector } from '../store/hooks'
+import { selectAuthUser } from '../store/slices/authSlice'
+import { getAvailabilityStatus, type Book } from '../types/book'
 import {
-  borrowBook,
-  selectActiveLoanCountForBook,
-} from '../store/slices/loansSlice'
-import {
-  checkoutInitialValues,
   createCheckoutSchema,
   type BookActionType,
   type CheckoutFormValues,
@@ -25,53 +24,62 @@ const ERROR_COLOR = '#c0392b'
 
 export function BookActionForm({ book, action, onClose }: BookActionFormProps) {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const activeLoans = useAppSelector((state) =>
-    selectActiveLoanCountForBook(state, book.id),
-  )
+  const user = useAppSelector(selectAuthUser)
+  const borrowMutation = useBorrowMutation()
+  const buyMutation = useBuyMutation()
   const validationSchema = createCheckoutSchema(t)
+  const isAvailable = getAvailabilityStatus(book) === 'available'
+  const isPending = borrowMutation.isPending || buyMutation.isPending
 
-  function handleSubmit(values: CheckoutFormValues) {
-    console.log({
-      action,
-      book: {
-        id: book.id,
-        title: book.title,
-        author: book.author,
-        price: book.price,
-      },
-      user: values,
-    })
+  const initialValues: CheckoutFormValues = {
+    fullName: user?.name ?? '',
+    email: user?.email ?? '',
+    phone: '',
+    address: '',
+  }
 
-    if (action === 'borrow') {
-      if (activeLoans >= book.availableCopies) {
-        toast.error(t('checkout.toast.unavailable', { title: book.title }))
-        return
-      }
-
-      dispatch(
-        borrowBook({
-          bookId: book.id,
-          fullName: values.fullName,
-          email: values.email,
-          phone: values.phone,
-          address: values.address,
-        }),
+  async function handleSubmit(values: CheckoutFormValues) {
+    if (!isAvailable) {
+      toast.error(
+        action === 'borrow'
+          ? t('checkout.toast.unavailable', { title: book.title })
+          : t('checkout.toast.outOfStock', { title: book.title }),
       )
+      return
     }
 
-    toast.success(
-      action === 'buy'
-        ? t('checkout.toast.buySuccess', { title: book.title })
-        : t('checkout.toast.borrowSuccess', { title: book.title }),
-    )
+    const payload = {
+      fullName: values.fullName.trim(),
+      email: values.email.trim().toLowerCase(),
+      phone: values.phone.trim(),
+      address: values.address.trim(),
+    }
 
-    onClose()
+    try {
+      if (action === 'borrow') {
+        await borrowMutation.mutateAsync({ bookId: book.id, payload })
+        toast.success(t('checkout.toast.borrowSuccess', { title: book.title }))
+      } else {
+        await buyMutation.mutateAsync({ bookId: book.id, payload })
+        toast.success(t('checkout.toast.buySuccess', { title: book.title }))
+      }
+      onClose()
+    } catch (error) {
+      toast.error(
+        getErrorMessage(
+          error,
+          action === 'borrow'
+            ? t('checkout.toast.borrowFailed')
+            : t('checkout.toast.buyFailed'),
+        ),
+      )
+    }
   }
 
   return (
     <Formik
-      initialValues={checkoutInitialValues}
+      initialValues={initialValues}
+      enableReinitialize
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
@@ -164,10 +172,14 @@ export function BookActionForm({ book, action, onClose }: BookActionFormProps) {
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isPending || !isAvailable}
               className="rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-dark disabled:opacity-60 dark:text-page"
             >
-              {t('checkout.submit')}
+              {isPending
+                ? t('checkout.submitting')
+                : action === 'buy'
+                  ? t('checkout.submitBuy')
+                  : t('checkout.submitBorrow')}
             </button>
             <button
               type="button"

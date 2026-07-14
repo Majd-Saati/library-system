@@ -1,8 +1,11 @@
+import { WarningCircle } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
-import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { AvailabilityBadge } from '../components/AvailabilityBadge'
 import { BackLink } from '../components/BackLink'
 import { BookActionForm } from '../components/BookActionForm'
 import { useBookQuery } from '../hooks/queries/useBookQuery'
+import { getAvailabilityStatus } from '../types/book'
 import type { BookActionType } from '../validation/checkoutSchema'
 
 function isBookAction(value: string | null): value is BookActionType {
@@ -38,9 +41,11 @@ export function CheckoutPage() {
 
   const action = actionParam
   const backTo = `/book/${book.id}`
+  const isAvailable = getAvailabilityStatus(book) === 'available'
+  const blocked = !isAvailable
 
   function handleDone() {
-    navigate(backTo)
+    navigate(action === 'borrow' ? '/books' : backTo)
   }
 
   return (
@@ -61,6 +66,9 @@ export function CheckoutPage() {
           <p className="mt-2 font-display text-2xl text-accent">
             ${book.price.toFixed(2)}
           </p>
+          <div className="mt-3">
+            <AvailabilityBadge book={book} />
+          </div>
         </div>
 
         <div className="rounded-3xl bg-surface p-6 shadow-sm ring-1 ring-border sm:p-8">
@@ -74,9 +82,40 @@ export function CheckoutPage() {
             {t('checkout.subtitle', { title: book.title })}
           </p>
 
-          <div className="mt-8">
-            <BookActionForm book={book} action={action} onClose={handleDone} />
-          </div>
+          {blocked ? (
+            <div className="mt-8 rounded-2xl border border-accent/30 bg-accent-light/60 px-4 py-5">
+              <div className="flex items-start gap-3">
+                <WarningCircle
+                  size={24}
+                  weight="fill"
+                  className="mt-0.5 shrink-0 text-accent-dark"
+                  aria-hidden
+                />
+                <div>
+                  <p className="font-semibold text-ink">
+                    {action === 'borrow'
+                      ? t('checkout.blocked.borrowTitle')
+                      : t('checkout.blocked.buyTitle')}
+                  </p>
+                  <p className="mt-1 text-sm text-muted">
+                    {action === 'borrow'
+                      ? t('checkout.blocked.borrowBody', { title: book.title })
+                      : t('checkout.blocked.buyBody', { title: book.title })}
+                  </p>
+                  <Link
+                    to="/"
+                    className="mt-4 inline-flex rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page"
+                  >
+                    {t('checkout.blocked.browse')}
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-8">
+              <BookActionForm book={book} action={action} onClose={handleDone} />
+            </div>
+          )}
         </div>
       </div>
     </section>
