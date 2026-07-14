@@ -1,7 +1,7 @@
 import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import type { Book } from '../data/books'
+import type { Book } from '../types/book'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   borrowBook,

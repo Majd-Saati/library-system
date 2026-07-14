@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { formatBookYear, type Book } from '../data/books'
+import { formatBookYear, type Book } from '../types/book'
 
 interface BookCardProps {
   book: Book

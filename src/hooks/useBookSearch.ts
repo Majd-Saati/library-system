@@ -1,5 +1,5 @@
 import { useDeferredValue, useMemo, useState } from 'react'
-import type { Book } from '../data/books'
+import type { Book } from '../types/book'
 import { searchBooks } from '../utils/searchBooks'
 
 const SUGGESTION_LIMIT = 6

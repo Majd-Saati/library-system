@@ -6,7 +6,7 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Book } from '../data/books'
+import type { Book } from '../types/book'
 
 interface BookSearchProps {
   query: string
@@ -14,6 +14,7 @@ interface BookSearchProps {
   onQueryChange: (value: string) => void
   onSelect: (book: Book) => void
   onClear: () => void
+  disabled?: boolean
 }
 
 export function BookSearch({
@@ -22,6 +23,7 @@ export function BookSearch({
   onQueryChange,
   onSelect,
   onClear,
+  disabled = false,
 }: BookSearchProps) {
   const { t } = useTranslation()
   const listboxId = useId()
@@ -132,7 +134,8 @@ export function BookSearch({
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
-          className="w-full rounded-2xl border border-border bg-surface py-3.5 pe-20 ps-12 text-base text-ink shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-4 focus:ring-brand/15 dark:shadow-[0_10px_30px_-18px_rgba(0,0,0,0.55)]"
+          disabled={disabled}
+          className="w-full rounded-2xl border border-border bg-surface py-3.5 pe-20 ps-12 text-base text-ink shadow-[0_10px_30px_-18px_rgba(27,79,114,0.45)] outline-none transition placeholder:text-muted/70 focus:border-brand focus:ring-4 focus:ring-brand/15 disabled:cursor-not-allowed disabled:opacity-60 dark:shadow-[0_10px_30px_-18px_rgba(0,0,0,0.55)]"
         />
 
         {query ? (

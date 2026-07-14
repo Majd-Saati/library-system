@@ -1,8 +1,37 @@
 {
   "app": {
     "name": "Library System",
+    "tagline": "Read · Borrow · Discover",
+    "navLabel": "Main navigation",
     "home": "Home",
-    "myShelf": "My shelf"
+    "myShelf": "My shelf",
+    "login": "Log in",
+    "logout": "Log out"
+  },
+  "login": {
+    "eyebrow": "Account",
+    "title": "Log in to continue",
+    "subtitle": "Sign in to buy or borrow books from the library.",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "submit": "Log in",
+    "submitting": "Signing in…",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "backHome": "Back to catalog",
+    "toast": {
+      "success": "Logged in successfully.",
+      "failed": "Login failed. Check your email and password.",
+      "logout": "You have been logged out."
+    },
+    "errors": {
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordMin": "Password must be at least 6 characters."
+    }
   },
   "language": {
     "label": "Language",
@@ -25,6 +54,10 @@
     "resultsFor": "{{count}} result for “{{query}}”",
     "resultsFor_other": "{{count}} results for “{{query}}”",
     "catalogCount": "{{count}} books in the catalog",
+    "loading": "Loading catalog…",
+    "errorTitle": "Could not load books",
+    "errorSubtitle": "Something went wrong while fetching the catalog.",
+    "retry": "Try again",
     "emptyTitle": "No books match your search",
     "emptySubtitle": "Try another title, author, or genre.",
     "clearSearch": "Clear search"

@@ -1,12 +1,15 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { getBookById } from '../data/books'
+import { useBooksQuery } from '../hooks/queries/useBooksQuery'
 import { useAppSelector } from '../store/hooks'
 import { selectLoans } from '../store/slices/loansSlice'
 
 export function BooksPage() {
   const { t, i18n } = useTranslation()
   const loans = useAppSelector(selectLoans)
+  const { data: books = [], isLoading } = useBooksQuery()
+
+  const booksById = new Map(books.map((book) => [book.id, book]))
 
   return (
     <section className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
@@ -24,10 +27,25 @@ export function BooksPage() {
             {t('shelf.browseCatalog')}
           </Link>
         </div>
+      ) : isLoading ? (
+        <ul className="mt-8 space-y-4">
+          {loans.map((loan) => (
+            <li
+              key={loan.id}
+              className="flex animate-pulse gap-4 rounded-2xl bg-surface p-4 ring-1 ring-border"
+            >
+              <div className="h-28 w-20 rounded-lg bg-brand-light" />
+              <div className="flex-1 space-y-3 py-2">
+                <div className="h-5 w-1/2 rounded bg-brand-light" />
+                <div className="h-4 w-1/3 rounded bg-brand-light" />
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : (
         <ul className="mt-8 space-y-4">
           {loans.map((loan) => {
-            const book = getBookById(loan.bookId)
+            const book = booksById.get(loan.bookId)
             if (!book) return null
 
             const borrowedDate = new Date(loan.borrowedAt).toLocaleDateString(

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { getBookById } from '../data/books'
 import { BookActionForm } from '../components/BookActionForm'
+import { useBookQuery } from '../hooks/queries/useBookQuery'
 import type { BookActionType } from '../validation/checkoutSchema'
 
 function isBookAction(value: string | null): value is BookActionType {
@@ -14,10 +14,25 @@ export function CheckoutPage() {
   const { bookId } = useParams<{ bookId: string }>()
   const [searchParams] = useSearchParams()
   const actionParam = searchParams.get('action')
-  const book = bookId ? getBookById(bookId) : undefined
+  const { data: book, isLoading, isError } = useBookQuery(bookId)
   const isRtl = i18n.dir() === 'rtl'
 
-  if (!book || !isBookAction(actionParam)) {
+  if (!isBookAction(actionParam)) {
+    return <Navigate to="/" replace />
+  }
+
+  if (isLoading) {
+    return (
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mt-6 grid animate-pulse gap-8 lg:grid-cols-[minmax(0,240px)_minmax(0,1fr)]">
+          <div className="aspect-[2/3] rounded-3xl bg-brand-light" />
+          <div className="h-80 rounded-3xl bg-brand-light" />
+        </div>
+      </section>
+    )
+  }
+
+  if (isError || !book) {
     return <Navigate to="/" replace />
   }
 

@@ -1,14 +1,31 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { formatBookYear, getBookById } from '../data/books'
+import { useBookQuery } from '../hooks/queries/useBookQuery'
+import { formatBookYear } from '../types/book'
 
 export function BookPage() {
   const { t, i18n } = useTranslation()
   const { bookId } = useParams<{ bookId: string }>()
-  const book = bookId ? getBookById(bookId) : undefined
+  const { data: book, isLoading, isError } = useBookQuery(bookId)
   const isRtl = i18n.dir() === 'rtl'
 
-  if (!book) {
+  if (isLoading) {
+    return (
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mt-6 grid animate-pulse gap-8 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] lg:gap-12">
+          <div className="mx-auto aspect-[2/3] w-full max-w-xs rounded-3xl bg-brand-light lg:mx-0" />
+          <div className="space-y-4">
+            <div className="h-4 w-24 rounded bg-brand-light" />
+            <div className="h-10 w-3/4 rounded bg-brand-light" />
+            <div className="h-5 w-1/2 rounded bg-brand-light" />
+            <div className="h-24 w-full rounded bg-brand-light" />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (isError || !book) {
     return <Navigate to="/" replace />
   }
 

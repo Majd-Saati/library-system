@@ -1,4 +1,4 @@
-import type { Book } from '../data/books'
+import type { Book } from '../types/book'
 
 export interface BookSearchResult {
   book: Book
