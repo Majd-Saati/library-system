@@ -1,6 +1,7 @@
 import { Desktop, Moon, Sun } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { useTheme, type Theme } from '../theme/ThemeProvider'
+import { HeaderDropdown, HeaderMenuItem } from './HeaderDropdown'
 
 const THEMES: Theme[] = ['light', 'dark', 'system']
 
@@ -13,36 +14,33 @@ const THEME_ICONS = {
 export function ThemeSwitcher() {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
+  const ActiveIcon = THEME_ICONS[theme]
 
   return (
-    <div
-      className="flex items-center gap-1 rounded-xl bg-brand-light p-1"
-      role="group"
-      aria-label={t('theme.label')}
+    <HeaderDropdown
+      label={t('theme.label')}
+      trigger={
+        <>
+          <ActiveIcon size={16} weight="fill" aria-hidden />
+          <span className="hidden sm:inline">{t(`theme.${theme}`)}</span>
+        </>
+      }
     >
       {THEMES.map((option) => {
-        const isActive = theme === option
         const Icon = THEME_ICONS[option]
+        const isActive = theme === option
 
         return (
-          <button
+          <HeaderMenuItem
             key={option}
-            type="button"
+            active={isActive}
             onClick={() => setTheme(option)}
-            aria-pressed={isActive}
-            title={t(`theme.${option}`)}
-            aria-label={t(`theme.${option}`)}
-            className={[
-              'grid place-items-center rounded-lg px-2.5 py-1.5 transition',
-              isActive
-                ? 'bg-brand text-white dark:text-page'
-                : 'text-brand hover:bg-surface/80',
-            ].join(' ')}
           >
             <Icon size={16} weight={isActive ? 'fill' : 'regular'} aria-hidden />
-          </button>
+            {t(`theme.${option}`)}
+          </HeaderMenuItem>
         )
       })}
-    </div>
+    </HeaderDropdown>
   )
 }

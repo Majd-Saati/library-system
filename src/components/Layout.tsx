@@ -10,6 +10,7 @@ import {
   selectAuthUser,
   selectIsAuthenticated,
 } from '../store/slices/authSlice'
+import { HeaderDropdown, HeaderMenuItem } from './HeaderDropdown'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
@@ -93,37 +94,40 @@ export function Layout() {
             </NavLink>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 md:flex">
               <ThemeSwitcher />
               <LanguageSwitcher />
             </div>
 
             {isAuthenticated && user ? (
-              <div className="flex items-center gap-2 rounded-2xl bg-brand-light/70 py-1 ps-1 pe-1 ring-1 ring-border/70 sm:pe-2">
-                <span
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand font-display text-sm font-bold text-white dark:text-page"
-                  aria-hidden
-                >
-                  {initials}
-                </span>
-                <span className="hidden min-w-0 pe-1 sm:block">
-                  <span className="block truncate text-sm font-semibold text-ink">
+              <HeaderDropdown
+                label={user.name}
+                trigger={
+                  <>
+                    <span
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-brand font-display text-xs font-bold text-white dark:text-page"
+                      aria-hidden
+                    >
+                      {initials}
+                    </span>
+                    <span className="hidden max-w-28 truncate sm:inline">
+                      {user.name}
+                    </span>
+                  </>
+                }
+              >
+                <div className="border-b border-border px-3 py-2">
+                  <p className="truncate text-sm font-semibold text-ink">
                     {user.name}
-                  </span>
-                  <span className="block truncate text-[11px] text-muted">
-                    {user.email}
-                  </span>
-                </span>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-sm font-semibold text-ink/70 transition hover:bg-surface hover:text-accent"
-                >
+                  </p>
+                  <p className="truncate text-xs text-muted">{user.email}</p>
+                </div>
+                <HeaderMenuItem danger onClick={handleLogout}>
                   <SignOut size={16} weight="bold" aria-hidden />
                   {t('app.logout')}
-                </button>
-              </div>
+                </HeaderMenuItem>
+              </HeaderDropdown>
             ) : (
               <NavLink
                 to={paths.login}
