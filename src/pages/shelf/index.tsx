@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { AvailabilityBadge } from '../components/AvailabilityBadge'
-import { useLoansQuery } from '../hooks/queries/useLoansQuery'
-import { useAppSelector } from '../store/hooks'
-import { selectIsAuthenticated } from '../store/slices/authSlice'
+import { AvailabilityBadge } from '../../components/AvailabilityBadge'
+import { useLoansQuery } from '../../hooks/useLoansQuery'
+import { useAppSelector } from '../../store/hooks'
+import { selectIsAuthenticated } from '../../store/slices/authSlice'
 
 export function BooksPage() {
   const { t, i18n } = useTranslation()

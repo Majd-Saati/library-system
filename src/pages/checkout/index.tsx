@@ -1,12 +1,12 @@
 import { WarningCircle } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { AvailabilityBadge } from '../components/AvailabilityBadge'
-import { BackLink } from '../components/BackLink'
-import { BookActionForm } from '../components/BookActionForm'
-import { useBookQuery } from '../hooks/queries/useBookQuery'
-import { getAvailabilityStatus } from '../types/book'
-import type { BookActionType } from '../validation/checkoutSchema'
+import { AvailabilityBadge } from '../../components/AvailabilityBadge'
+import { BackLink } from '../../components/BackLink'
+import { useBookQuery } from '../../hooks/useBookQuery'
+import { getAvailabilityStatus } from '../../types/book'
+import { BookActionForm } from './components/BookActionForm'
+import type { BookActionType } from './validation/checkoutSchema'
 
 function isBookAction(value: string | null): value is BookActionType {
   return value === 'buy' || value === 'borrow'

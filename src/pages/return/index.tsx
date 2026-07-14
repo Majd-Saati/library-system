@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Navigate, useParams } from 'react-router-dom'
-import { AvailabilityBadge } from '../components/AvailabilityBadge'
-import { BackLink } from '../components/BackLink'
-import { ReturnBookForm } from '../components/ReturnBookForm'
-import { useLoanQuery } from '../hooks/queries/useLoansQuery'
+import { AvailabilityBadge } from '../../components/AvailabilityBadge'
+import { BackLink } from '../../components/BackLink'
+import { ReturnBookForm } from './components/ReturnBookForm'
+import { useLoanQuery } from './hooks/useLoanQuery'
 
 export function ReturnPage() {
   const { t, i18n } = useTranslation()

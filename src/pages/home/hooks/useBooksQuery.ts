@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { booksApi } from '../../api'
-import { queryKeys } from '../../lib/queryKeys'
+import { booksApi } from '../../../api'
+import { queryKeys } from '../../../lib/queryKeys'
 
 export function useBooksQuery(query = '') {
   const trimmed = query.trim()

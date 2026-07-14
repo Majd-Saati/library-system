@@ -7,8 +7,8 @@ import {
 } from 'react'
 import { MagnifyingGlass, X } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
-import type { Book } from '../types/book'
-import { AvailabilityBadge } from './AvailabilityBadge'
+import type { Book } from '../../../types/book'
+import { AvailabilityBadge } from '../../../components/AvailabilityBadge'
 
 interface BookSearchProps {
   query: string

@@ -2,7 +2,7 @@ import { BookOpen, SignIn, SignOut } from '@phosphor-icons/react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { useLoansQuery } from '../hooks/queries/useLoansQuery'
+import { useLoansQuery } from '../hooks/useLoansQuery'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import {
   logout,

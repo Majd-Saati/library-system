@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { formatBookYear, getAvailabilityStatus, type Book } from '../types/book'
-import { AvailabilityBadge } from './AvailabilityBadge'
+import { formatBookYear, getAvailabilityStatus, type Book } from '../../../types/book'
+import { AvailabilityBadge } from '../../../components/AvailabilityBadge'
 
 interface BookCardProps {
   book: Book

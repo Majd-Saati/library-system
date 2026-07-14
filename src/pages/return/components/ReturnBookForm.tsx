@@ -2,16 +2,16 @@ import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { getErrorMessage } from '../api'
-import { useReturnLoanMutation } from '../hooks/mutations/useReturnLoanMutation'
-import type { Book } from '../types/book'
-import type { Loan } from '../types/loan'
+import { getErrorMessage } from '../../../api'
+import { ErrorMessage } from '../../../components/ErrorMessage'
+import type { Book } from '../../../types/book'
+import type { Loan } from '../../../types/loan'
+import { useReturnLoanMutation } from '../hooks/useReturnLoanMutation'
 import {
   createReturnSchema,
   returnInitialValues,
   type ReturnFormValues,
 } from '../validation/returnSchema'
-import { ErrorMessage } from './ErrorMessage'
 
 interface ReturnBookFormProps {
   book: Book

@@ -1,5 +1,5 @@
 import { useDeferredValue, useState } from 'react'
-import { useBooksQuery } from './queries/useBooksQuery'
+import { useBooksQuery } from './useBooksQuery'
 
 export function useBookSearch() {
   const [query, setQuery] = useState('')

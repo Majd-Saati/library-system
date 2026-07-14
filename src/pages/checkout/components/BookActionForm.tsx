@@ -1,18 +1,18 @@
 import { Formik, Form, Field, type FieldProps } from 'formik'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { getErrorMessage } from '../api'
-import { useBuyMutation } from '../hooks/mutations/useBuyMutation'
-import { useBorrowMutation } from '../hooks/mutations/useBorrowMutation'
-import { useAppSelector } from '../store/hooks'
-import { selectAuthUser } from '../store/slices/authSlice'
-import { getAvailabilityStatus, type Book } from '../types/book'
+import { getErrorMessage } from '../../../api'
+import { ErrorMessage } from '../../../components/ErrorMessage'
+import { useAppSelector } from '../../../store/hooks'
+import { selectAuthUser } from '../../../store/slices/authSlice'
+import { getAvailabilityStatus, type Book } from '../../../types/book'
+import { useBuyMutation } from '../hooks/useBuyMutation'
+import { useBorrowMutation } from '../hooks/useBorrowMutation'
 import {
   createCheckoutSchema,
   type BookActionType,
   type CheckoutFormValues,
 } from '../validation/checkoutSchema'
-import { ErrorMessage } from './ErrorMessage'
 
 interface BookActionFormProps {
   book: Book

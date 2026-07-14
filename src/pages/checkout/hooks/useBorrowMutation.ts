@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { booksApi, type CheckoutPayload } from '../../api'
-import { queryKeys } from '../../lib/queryKeys'
+import { booksApi, type CheckoutPayload } from '../../../api'
+import { queryKeys } from '../../../lib/queryKeys'
 
 interface BorrowVariables {
   bookId: string

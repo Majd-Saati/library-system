@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { AvailabilityBadge } from '../components/AvailabilityBadge'
-import { BackLink } from '../components/BackLink'
-import { useBookQuery } from '../hooks/queries/useBookQuery'
-import { formatBookYear, getAvailabilityStatus } from '../types/book'
+import { AvailabilityBadge } from '../../components/AvailabilityBadge'
+import { BackLink } from '../../components/BackLink'
+import { useBookQuery } from '../../hooks/useBookQuery'
+import { formatBookYear, getAvailabilityStatus } from '../../types/book'
 
 export function BookPage() {
   const { t } = useTranslation()

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { BookCard } from '../components/BookCard'
-import { BookGridSkeleton } from '../components/BookCardSkeleton'
-import { BookSearch } from '../components/BookSearch'
-import { useBookSearch } from '../hooks/useBookSearch'
+import { BookCard } from './components/BookCard'
+import { BookGridSkeleton } from './components/BookCardSkeleton'
+import { BookSearch } from './components/BookSearch'
+import { useBookSearch } from './hooks/useBookSearch'
 
 export function HomePage() {
   const { t } = useTranslation()

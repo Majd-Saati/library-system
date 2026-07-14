@@ -4,16 +4,16 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { getErrorMessage } from '../api'
-import { ErrorMessage } from '../components/ErrorMessage'
-import { useLoginMutation } from '../hooks/mutations/useLoginMutation'
-import { useAppSelector } from '../store/hooks'
-import { selectIsAuthenticated } from '../store/slices/authSlice'
+import { getErrorMessage } from '../../api'
+import { ErrorMessage } from '../../components/ErrorMessage'
+import { useAppSelector } from '../../store/hooks'
+import { selectIsAuthenticated } from '../../store/slices/authSlice'
+import { useLoginMutation } from './hooks/useLoginMutation'
 import {
   createLoginSchema,
   loginInitialValues,
   type LoginFormValues,
-} from '../validation/loginSchema'
+} from './validation/loginSchema'
 
 const ERROR_COLOR = '#c0392b'
 

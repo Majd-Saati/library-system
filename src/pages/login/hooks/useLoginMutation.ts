@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
-import { authApi, type LoginPayload } from '../../api'
-import { useAppDispatch } from '../../store/hooks'
-import { setCredentials } from '../../store/slices/authSlice'
+import { authApi, type LoginPayload } from '../../../api'
+import { useAppDispatch } from '../../../store/hooks'
+import { setCredentials } from '../../../store/slices/authSlice'
 
 export function useLoginMutation() {
   const dispatch = useAppDispatch()

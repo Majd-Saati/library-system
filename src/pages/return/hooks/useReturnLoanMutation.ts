@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { loansApi } from '../../api'
-import { queryKeys } from '../../lib/queryKeys'
+import { loansApi } from '../../../api'
+import { queryKeys } from '../../../lib/queryKeys'
 
 export function useReturnLoanMutation() {
   const queryClient = useQueryClient()
