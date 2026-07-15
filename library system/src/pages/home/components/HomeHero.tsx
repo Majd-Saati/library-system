@@ -1,5 +1,6 @@
 import { ArrowDown, Books } from '@phosphor-icons/react'
 import { motion, type PanInfo } from 'framer-motion'
+import { useCallback, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { scrollToElement, useMotionPrefs } from '../../../lib/motion'
@@ -10,6 +11,7 @@ const HERO_IMAGE =
 
 const SWIPE_OFFSET = -72
 const SWIPE_VELOCITY = -450
+const WHEEL_DELTA = 8
 
 interface HomeHeroProps {
   catalogId?: string
@@ -17,6 +19,8 @@ interface HomeHeroProps {
 
 export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
   const { t } = useTranslation()
+  const heroRef = useRef<HTMLElement | null>(null)
+  const navigatingRef = useRef(false)
   const {
     fadeUp,
     fadeUpTransition,
@@ -25,9 +29,14 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
     prefersReducedMotion,
   } = useMotionPrefs()
 
-  function goToCatalog() {
+  const goToCatalog = useCallback(() => {
+    if (navigatingRef.current) return
+    navigatingRef.current = true
     scrollToElement(catalogId, { reducedMotion: Boolean(prefersReducedMotion) })
-  }
+    window.setTimeout(() => {
+      navigatingRef.current = false
+    }, prefersReducedMotion ? 50 : 900)
+  }, [catalogId, prefersReducedMotion])
 
   function handleDragEnd(_: unknown, info: PanInfo) {
     if (info.offset.y <= SWIPE_OFFSET || info.velocity.y <= SWIPE_VELOCITY) {
@@ -35,8 +44,25 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
     }
   }
 
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+
+    function handleWheel(event: WheelEvent) {
+      if (!hero || event.deltaY <= WHEEL_DELTA || navigatingRef.current) return
+      if (window.scrollY > hero.offsetHeight * 0.35) return
+
+      event.preventDefault()
+      goToCatalog()
+    }
+
+    hero.addEventListener('wheel', handleWheel, { passive: false })
+    return () => hero.removeEventListener('wheel', handleWheel)
+  }, [goToCatalog])
+
   return (
     <motion.section
+      ref={heroRef}
       className="relative isolate min-h-[min(88svh,52rem)] cursor-grab touch-pan-x overflow-hidden active:cursor-grabbing"
       aria-labelledby="home-hero-brand"
       drag={prefersReducedMotion ? false : 'y'}
