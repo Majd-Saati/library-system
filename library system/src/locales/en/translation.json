@@ -48,6 +48,14 @@
     "eyebrow": "Catalog",
     "title": "Discover your next read",
     "subtitle": "Twenty curated titles ready to buy or borrow from the library shelf.",
+    "hero": {
+      "headline": "Find your next chapter",
+      "subtitle": "Search, borrow, and return titles from a quiet shelf built for curious readers.",
+      "browseCta": "Browse the catalog",
+      "shelfCta": "My shelf",
+      "imageAlt": "Sunlit library shelves filled with books"
+    },
+    "catalogTitle": "Catalog",
     "resultsFor": "{{count}} result for “{{query}}”",
     "resultsFor_other": "{{count}} results for “{{query}}”",
     "catalogCount": "{{count}} books in the catalog",
