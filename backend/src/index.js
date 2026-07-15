@@ -7,6 +7,7 @@ const User = require('./models/User');
 require('./models/Book');
 require('./models/Loan');
 require('./models/Purchase');
+const bookRepository = require('./data/bookRepository');
 const authRoutes = require('./routes/auth');
 const booksRoutes = require('./routes/books');
 const loansRoutes = require('./routes/loans');
@@ -26,10 +27,23 @@ app.use('/api/auth', authRoutes);
 app.use('/api/books', booksRoutes);
 app.use('/api/loans', loansRoutes);
 
+async function ensureAvailabilityStatusColumn() {
+  const [columns] = await sequelize.query('PRAGMA table_info(`books`)');
+  const hasColumn = columns.some((column) => column.name === 'availabilityStatus');
+
+  if (!hasColumn) {
+    await sequelize.query(
+      "ALTER TABLE `books` ADD COLUMN `availabilityStatus` VARCHAR(255) NOT NULL DEFAULT 'available'",
+    );
+    console.log('Added books.availabilityStatus column');
+  }
+}
+
 async function start() {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
+    await ensureAvailabilityStatusColumn();
 
     const email = 'majd@titan-tech.com';
     const existing = await User.findOne({ where: { email } });
@@ -44,6 +58,7 @@ async function start() {
     }
 
     await seedBooks();
+    await bookRepository.syncAvailabilityStatuses();
 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);

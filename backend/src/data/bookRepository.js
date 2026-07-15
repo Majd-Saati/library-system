@@ -14,6 +14,15 @@ function buildSearchWhere(query) {
   };
 }
 
+function statusFromCopies(availableCopies) {
+  return availableCopies > 0 ? 'available' : 'checked_out';
+}
+
+function applyAvailability(book) {
+  book.availabilityStatus = statusFromCopies(book.availableCopies);
+  return book;
+}
+
 const bookRepository = {
   findAll({ query, genre, availability } = {}) {
     const where = {
@@ -24,10 +33,8 @@ const bookRepository = {
       where.genre = genre;
     }
 
-    if (availability === 'available') {
-      where.availableCopies = { [Op.gt]: 0 };
-    } else if (availability === 'checked_out') {
-      where.availableCopies = { [Op.lte]: 0 };
+    if (availability === 'available' || availability === 'checked_out') {
+      where.availabilityStatus = availability;
     }
 
     return Book.findAll({
@@ -61,15 +68,31 @@ const bookRepository = {
   },
 
   async decrementCopies(book, transaction) {
-    book.availableCopies -= 1;
+    book.availableCopies = Math.max(0, book.availableCopies - 1);
+    applyAvailability(book);
     await book.save({ transaction });
     return book;
   },
 
   async incrementCopies(book, transaction) {
     book.availableCopies += 1;
+    applyAvailability(book);
     await book.save({ transaction });
     return book;
+  },
+
+  /** Keep availabilityStatus column aligned with availableCopies (startup backfill). */
+  async syncAvailabilityStatuses() {
+    const books = await Book.findAll();
+    await Promise.all(
+      books.map(async (book) => {
+        const next = statusFromCopies(book.availableCopies);
+        if (book.availabilityStatus !== next) {
+          book.availabilityStatus = next;
+          await book.save();
+        }
+      }),
+    );
   },
 };
 

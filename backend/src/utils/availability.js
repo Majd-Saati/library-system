@@ -4,10 +4,17 @@ function withAvailability(book) {
 
   if (!plain) return null;
 
+  const availabilityStatus =
+    plain.availabilityStatus === 'available' ||
+    plain.availabilityStatus === 'checked_out'
+      ? plain.availabilityStatus
+      : plain.availableCopies > 0
+        ? 'available'
+        : 'checked_out';
+
   return {
     ...plain,
-    availabilityStatus:
-      plain.availableCopies > 0 ? 'available' : 'checked_out',
+    availabilityStatus,
   };
 }
 

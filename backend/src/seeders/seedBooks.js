@@ -8,7 +8,13 @@ async function seedBooks() {
     return;
   }
 
-  await Book.bulkCreate(booksData);
+  await Book.bulkCreate(
+    booksData.map((book) => ({
+      ...book,
+      availabilityStatus:
+        book.availableCopies > 0 ? 'available' : 'checked_out',
+    })),
+  );
   console.log(`Seeded ${booksData.length} books`);
 }
 

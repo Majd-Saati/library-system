@@ -58,6 +58,14 @@ const Book = sequelize.define(
       allowNull: false,
       defaultValue: 0,
     },
+    availabilityStatus: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'available',
+      validate: {
+        isIn: [['available', 'checked_out']],
+      },
+    },
     rating: {
       type: DataTypes.FLOAT,
       allowNull: false,
