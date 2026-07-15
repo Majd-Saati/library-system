@@ -1,29 +1,42 @@
+import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { useMotionPrefs } from '../../lib/motion'
 import { paths } from '../../routes/paths'
 import { BookCard } from './components/BookCard'
 import { BookGridSkeleton } from './components/BookCardSkeleton'
 import { BookSearch } from './components/BookSearch'
+import { CatalogFilters } from './components/CatalogFilters'
 import { HomeHero } from './components/HomeHero'
 import { useBookSearch } from './hooks/useBookSearch'
 
 export function HomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { staggerContainer, staggerItem } = useMotionPrefs()
   const {
     query,
     setQuery,
+    filters,
+    setFilters,
+    genres,
     suggestions,
     filteredBooks,
     clearQuery,
+    clearFilters,
+    clearAll,
     hasQuery,
+    filtersActive,
     isSearchLoading,
     isCatalogLoading,
     isCatalogError,
     catalogError,
     refetchCatalog,
+    resultCount,
     catalogCount,
   } = useBookSearch()
+
+  const deferredKey = query.trim()
 
   return (
     <div>
@@ -40,7 +53,7 @@ export function HomePage() {
           <p className="mt-2 text-muted">{t('home.subtitle')}</p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-6">
           <BookSearch
             query={query}
             suggestions={suggestions}
@@ -50,19 +63,35 @@ export function HomePage() {
             disabled={isCatalogLoading}
             isLoading={isSearchLoading}
           />
-          <p className="mt-3 text-sm text-muted" aria-live="polite">
-            {isCatalogLoading
-              ? t('home.loading')
-              : isSearchLoading
-                ? t('search.searching')
-                : hasQuery
-                  ? t('home.resultsFor', {
-                      count: filteredBooks.length,
-                      query: query.trim(),
+        </div>
+
+        <div className="mb-4">
+          <CatalogFilters
+            filters={filters}
+            genres={genres}
+            onChange={setFilters}
+            onClear={clearFilters}
+            disabled={isCatalogLoading}
+          />
+        </div>
+
+        <p className="mb-8 text-sm text-muted" aria-live="polite">
+          {isCatalogLoading
+            ? t('home.loading')
+            : isSearchLoading
+              ? t('search.searching')
+              : hasQuery
+                ? t('home.resultsFor', {
+                    count: resultCount,
+                    query: query.trim(),
+                  })
+                : filtersActive
+                  ? t('home.filteredCount', {
+                      count: resultCount,
+                      total: catalogCount,
                     })
                   : t('home.catalogCount', { count: catalogCount })}
-          </p>
-        </div>
+        </p>
 
         {isCatalogLoading || (hasQuery && isSearchLoading) ? (
           <BookGridSkeleton />
@@ -90,18 +119,26 @@ export function HomePage() {
             <p className="mt-2 text-muted">{t('home.emptySubtitle')}</p>
             <button
               type="button"
-              onClick={clearQuery}
+              onClick={clearAll}
               className="mt-5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark dark:text-page dark:hover:bg-brand/80"
             >
               {t('home.clearSearch')}
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <motion.div
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            key={`${filters.genre}-${filters.availability}-${filters.sort}-${deferredKey}`}
+          >
             {filteredBooks.map((book) => (
-              <BookCard key={book.id} book={book} />
+              <motion.div key={book.id} variants={staggerItem}>
+                <BookCard book={book} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </section>
     </div>

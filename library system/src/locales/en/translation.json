@@ -59,13 +59,29 @@
     "resultsFor": "{{count}} result for “{{query}}”",
     "resultsFor_other": "{{count}} results for “{{query}}”",
     "catalogCount": "{{count}} books in the catalog",
+    "filteredCount": "Showing {{count}} of {{total}} books",
     "loading": "Loading catalog…",
     "errorTitle": "Could not load books",
     "errorSubtitle": "Something went wrong while fetching the catalog.",
     "retry": "Try again",
     "emptyTitle": "No books match your search",
-    "emptySubtitle": "Try another title, author, or genre.",
-    "clearSearch": "Clear search"
+    "emptySubtitle": "Try another title, author, genre, or availability filter.",
+    "clearSearch": "Clear filters"
+  },
+  "filters": {
+    "label": "Catalog filters",
+    "genre": "Genre",
+    "allGenres": "All genres",
+    "availability": "Availability",
+    "allAvailability": "All books",
+    "available": "Available only",
+    "checkedOut": "Checked out only",
+    "sort": "Sort by",
+    "sortTitle": "Title A–Z",
+    "sortAuthor": "Author A–Z",
+    "sortYearDesc": "Newest first",
+    "sortYearAsc": "Oldest first",
+    "clear": "Reset filters"
   },
   "search": {
     "label": "Search books by title, author, or ISBN",

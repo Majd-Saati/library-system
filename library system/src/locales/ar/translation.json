@@ -59,13 +59,29 @@
     "resultsFor": "نتيجة واحدة لـ ”{{query}}“",
     "resultsFor_other": "{{count}} نتائج لـ ”{{query}}“",
     "catalogCount": "{{count}} كتب في الفهرس",
+    "filteredCount": "عرض {{count}} من أصل {{total}} كتب",
     "loading": "جارٍ تحميل الفهرس…",
     "errorTitle": "تعذر تحميل الكتب",
     "errorSubtitle": "حدث خطأ أثناء جلب الفهرس.",
     "retry": "حاول مجددًا",
     "emptyTitle": "لا توجد كتب تطابق بحثك",
-    "emptySubtitle": "جرّب عنوانًا أو مؤلفًا أو نوعًا آخر.",
-    "clearSearch": "مسح البحث"
+    "emptySubtitle": "جرّب عنوانًا أو مؤلفًا أو نوعًا أو حالة توفر أخرى.",
+    "clearSearch": "مسح الفلاتر"
+  },
+  "filters": {
+    "label": "فلاتر الفهرس",
+    "genre": "النوع",
+    "allGenres": "كل الأنواع",
+    "availability": "التوفر",
+    "allAvailability": "كل الكتب",
+    "available": "المتاح فقط",
+    "checkedOut": "المستعار فقط",
+    "sort": "ترتيب حسب",
+    "sortTitle": "العنوان أ–ي",
+    "sortAuthor": "المؤلف أ–ي",
+    "sortYearDesc": "الأحدث أولاً",
+    "sortYearAsc": "الأقدم أولاً",
+    "clear": "إعادة تعيين الفلاتر"
   },
   "search": {
     "label": "ابحث عن الكتب حسب العنوان أو المؤلف أو ردمك",
