@@ -4,7 +4,6 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+]?[\d\s()-]{8,20}$/;
 
 const AVAILABILITY_FILTERS = new Set(['all', 'available', 'checked_out']);
-const SORT_OPTIONS = new Set(['title', 'author', 'year-desc', 'year-asc']);
 
 function validateSearchQuery(rawQuery) {
   const query = String(rawQuery || '').trim();
@@ -33,15 +32,7 @@ function validateBookListParams(query = {}) {
     );
   }
 
-  const sort = String(query.sort || 'title').trim();
-  if (!SORT_OPTIONS.has(sort)) {
-    throw new AppError(
-      'Sort must be one of: title, author, year-desc, year-asc',
-      400,
-    );
-  }
-
-  return { q, genre, availability, sort };
+  return { q, genre, availability };
 }
 
 function validateCheckoutInput(body = {}) {

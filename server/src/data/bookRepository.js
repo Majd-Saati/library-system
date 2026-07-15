@@ -14,31 +14,8 @@ function buildSearchWhere(query) {
   };
 }
 
-function buildOrder(sort) {
-  switch (sort) {
-    case 'author':
-      return [
-        ['author', 'ASC'],
-        ['title', 'ASC'],
-      ];
-    case 'year-asc':
-      return [
-        ['year', 'ASC'],
-        ['title', 'ASC'],
-      ];
-    case 'year-desc':
-      return [
-        ['year', 'DESC'],
-        ['title', 'ASC'],
-      ];
-    case 'title':
-    default:
-      return [['title', 'ASC']];
-  }
-}
-
 const bookRepository = {
-  findAll({ query, genre, availability, sort } = {}) {
+  findAll({ query, genre, availability } = {}) {
     const where = {
       ...buildSearchWhere(query),
     };
@@ -55,7 +32,10 @@ const bookRepository = {
 
     return Book.findAll({
       where,
-      order: buildOrder(sort),
+      order: [
+        ['title', 'ASC'],
+        ['id', 'ASC'],
+      ],
     });
   },
 

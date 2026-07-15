@@ -10,7 +10,6 @@ const bookService = {
       query: params.q,
       genre: params.genre,
       availability: params.availability,
-      sort: params.sort,
     };
 
     const [books, total, genres] = await Promise.all([
@@ -24,7 +23,6 @@ const bookService = {
       filters: {
         genre: params.genre,
         availability: params.availability,
-        sort: params.sort,
       },
       count: books.length,
       total,
