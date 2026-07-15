@@ -98,7 +98,7 @@ export function BookSearch({
   }
 
   return (
-    <div ref={rootRef} className="relative w-full max-w-2xl">
+    <div ref={rootRef} className="relative w-full">
       <label htmlFor="book-search" className="sr-only">
         {t('search.label')}
       </label>

@@ -53,7 +53,7 @@ export function HomePage() {
           <p className="mt-2 text-muted">{t('home.subtitle')}</p>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4 w-full max-w-2xl space-y-4">
           <BookSearch
             query={query}
             suggestions={suggestions}
@@ -63,9 +63,6 @@ export function HomePage() {
             disabled={isCatalogLoading}
             isLoading={isSearchLoading}
           />
-        </div>
-
-        <div className="mb-4">
           <CatalogFilters
             filters={filters}
             genres={genres}
