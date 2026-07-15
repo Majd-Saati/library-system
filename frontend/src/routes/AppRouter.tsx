@@ -1,16 +1,30 @@
+import { lazy } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Navigate, useParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
-import { BookPage } from '../pages/book'
-import { CheckoutPage } from '../pages/checkout'
-import { HomePage } from '../pages/home'
-import { LoginPage } from '../pages/login'
-import { ReturnPage } from '../pages/return'
-import { BooksPage } from '../pages/shelf'
 import { GuestRoute } from './GuestRoute'
 import { ProtectedRoute } from './ProtectedRoute'
 import { RootLayout } from './RootLayout'
 import { paths, routePatterns } from './paths'
+
+const HomePage = lazy(() =>
+  import('../pages/home').then((m) => ({ default: m.HomePage })),
+)
+const BookPage = lazy(() =>
+  import('../pages/book').then((m) => ({ default: m.BookPage })),
+)
+const BooksPage = lazy(() =>
+  import('../pages/shelf').then((m) => ({ default: m.BooksPage })),
+)
+const LoginPage = lazy(() =>
+  import('../pages/login').then((m) => ({ default: m.LoginPage })),
+)
+const CheckoutPage = lazy(() =>
+  import('../pages/checkout').then((m) => ({ default: m.CheckoutPage })),
+)
+const ReturnPage = lazy(() =>
+  import('../pages/return').then((m) => ({ default: m.ReturnPage })),
+)
 
 function LegacyBookRedirect() {
   const { bookId } = useParams<{ bookId: string }>()

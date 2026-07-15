@@ -1,19 +1,21 @@
+import { Suspense } from 'react'
 import { BookOpen, Books, SignIn, SignOut } from '@phosphor-icons/react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { useLoansQuery } from '../hooks/useLoansQuery'
-import { paths } from '../routes/paths'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { useLoansQuery } from '../../hooks/useLoansQuery'
+import { paths } from '../../routes/paths'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
   logout,
   selectAuthUser,
   selectIsAuthenticated,
-} from '../store/slices/authSlice'
-import { Footer } from './Footer'
-import { HeaderDropdown, HeaderMenuItem } from './HeaderDropdown'
-import { LanguageSwitcher } from './LanguageSwitcher'
-import { ThemeSwitcher } from './ThemeSwitcher'
+} from '../../store/slices/authSlice'
+import { Footer } from './components/Footer'
+import { HeaderDropdown, HeaderMenuItem } from './components/HeaderDropdown'
+import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { PageFallback } from './components/PageFallback'
+import { ThemeSwitcher } from './components/ThemeSwitcher'
 
 function BrandMark() {
   return (
@@ -124,7 +126,9 @@ export function Layout() {
         </div>
       </header>
       <main className="flex-1">
-        <Outlet />
+        <Suspense fallback={<PageFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

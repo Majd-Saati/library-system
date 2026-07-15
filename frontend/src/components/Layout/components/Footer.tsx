@@ -1,7 +1,7 @@
 import { BookOpen } from '@phosphor-icons/react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { paths } from '../routes/paths'
+import { paths } from '../../../routes/paths'
 
 export function Footer() {
   const { t } = useTranslation()

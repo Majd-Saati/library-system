@@ -1,6 +1,6 @@
 import { Desktop, Moon, Sun } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
-import { useTheme, type Theme } from '../theme/ThemeProvider'
+import { useTheme, type Theme } from '../../../theme/ThemeProvider'
 import { HeaderDropdown, HeaderMenuItem } from './HeaderDropdown'
 
 const THEMES: Theme[] = ['light', 'dark', 'system']

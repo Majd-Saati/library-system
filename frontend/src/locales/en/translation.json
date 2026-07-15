@@ -6,7 +6,8 @@
     "home": "Home",
     "myShelf": "My shelf",
     "login": "Log in",
-    "logout": "Log out"
+    "logout": "Log out",
+    "loading": "Loading…"
   },
   "footer": {
     "blurb": "A quiet shelf for curious readers — search by title, author, or ISBN, then borrow and return with ease.",
