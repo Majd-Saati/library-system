@@ -10,13 +10,11 @@ export interface CheckoutPayload {
 }
 
 export type BookAvailabilityFilter = 'all' | 'available' | 'checked_out'
-export type BookSortOption = 'title' | 'author' | 'year-desc' | 'year-asc'
 
 export interface BooksListParams {
   q?: string
   genre?: string
   availability?: BookAvailabilityFilter
-  sort?: BookSortOption
 }
 
 export interface BooksListResult {
@@ -24,7 +22,6 @@ export interface BooksListResult {
   filters: {
     genre: string
     availability: BookAvailabilityFilter
-    sort: BookSortOption
   }
   count: number
   total: number
@@ -40,7 +37,6 @@ function buildBooksQuery(params: BooksListParams = {}) {
   if (params.availability && params.availability !== 'all') {
     search.set('availability', params.availability)
   }
-  if (params.sort && params.sort !== 'title') search.set('sort', params.sort)
 
   const query = search.toString()
   return query ? `/books?${query}` : '/books'

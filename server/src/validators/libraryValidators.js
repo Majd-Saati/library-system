@@ -3,6 +3,9 @@ const AppError = require('../utils/AppError');
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+]?[\d\s()-]{8,20}$/;
 
+const AVAILABILITY_FILTERS = new Set(['all', 'available', 'checked_out']);
+const SORT_OPTIONS = new Set(['title', 'author', 'year-desc', 'year-asc']);
+
 function validateSearchQuery(rawQuery) {
   const query = String(rawQuery || '').trim();
 
@@ -11,6 +14,34 @@ function validateSearchQuery(rawQuery) {
   }
 
   return query;
+}
+
+function validateBookListParams(query = {}) {
+  const q = validateSearchQuery(query.q);
+
+  const genreRaw = String(query.genre || 'all').trim();
+  const genre = genreRaw.length === 0 ? 'all' : genreRaw;
+  if (genre.length > 60) {
+    throw new AppError('Genre must be 60 characters or fewer', 400);
+  }
+
+  const availability = String(query.availability || 'all').trim();
+  if (!AVAILABILITY_FILTERS.has(availability)) {
+    throw new AppError(
+      'Availability must be one of: all, available, checked_out',
+      400,
+    );
+  }
+
+  const sort = String(query.sort || 'title').trim();
+  if (!SORT_OPTIONS.has(sort)) {
+    throw new AppError(
+      'Sort must be one of: title, author, year-desc, year-asc',
+      400,
+    );
+  }
+
+  return { q, genre, availability, sort };
 }
 
 function validateCheckoutInput(body = {}) {
@@ -58,6 +89,7 @@ function validateReturnInput(body = {}, loanEmail) {
 
 module.exports = {
   validateSearchQuery,
+  validateBookListParams,
   validateCheckoutInput,
   validateReturnInput,
 };

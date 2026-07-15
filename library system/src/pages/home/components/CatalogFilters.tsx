@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import type {
   AvailabilityFilter,
   CatalogFiltersState,
-  SortOption,
 } from '../lib/catalogFilters'
 import { hasActiveCatalogFilters } from '../lib/catalogFilters'
 
@@ -40,7 +39,7 @@ export function CatalogFilters({
       role="group"
       aria-label={t('filters.label')}
     >
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] lg:items-end">
         <div>
           <label
             htmlFor="filter-genre"
@@ -83,29 +82,6 @@ export function CatalogFilters({
             <option value="all">{t('filters.allAvailability')}</option>
             <option value="available">{t('filters.available')}</option>
             <option value="checked_out">{t('filters.checkedOut')}</option>
-          </select>
-        </div>
-
-        <div>
-          <label
-            htmlFor="filter-sort"
-            className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted"
-          >
-            {t('filters.sort')}
-          </label>
-          <select
-            id="filter-sort"
-            value={filters.sort}
-            disabled={disabled}
-            onChange={(event) =>
-              update('sort', event.target.value as SortOption)
-            }
-            className={selectClassName}
-          >
-            <option value="title">{t('filters.sortTitle')}</option>
-            <option value="author">{t('filters.sortAuthor')}</option>
-            <option value="year-desc">{t('filters.sortYearDesc')}</option>
-            <option value="year-asc">{t('filters.sortYearAsc')}</option>
           </select>
         </div>
 

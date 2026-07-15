@@ -1,16 +1,34 @@
 const bookRepository = require('../data/bookRepository');
 const { withAvailability } = require('../utils/availability');
-const { validateSearchQuery } = require('../validators/libraryValidators');
+const { validateBookListParams } = require('../validators/libraryValidators');
 const AppError = require('../utils/AppError');
 
 const bookService = {
-  async searchBooks(rawQuery) {
-    const query = validateSearchQuery(rawQuery);
-    const books = await bookRepository.findAll({ query });
+  async searchBooks(rawParams = {}) {
+    const params = validateBookListParams(rawParams);
+    const listParams = {
+      query: params.q,
+      genre: params.genre,
+      availability: params.availability,
+      sort: params.sort,
+    };
+
+    const [books, total, genres] = await Promise.all([
+      bookRepository.findAll(listParams),
+      bookRepository.countMatching({ query: params.q }),
+      bookRepository.findGenres(),
+    ]);
 
     return {
-      query: query || null,
+      query: params.q || null,
+      filters: {
+        genre: params.genre,
+        availability: params.availability,
+        sort: params.sort,
+      },
       count: books.length,
+      total,
+      genres,
       books: books.map(withAvailability),
     };
   },

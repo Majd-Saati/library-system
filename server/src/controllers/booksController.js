@@ -4,7 +4,7 @@ const { handleControllerError } = require('../utils/controller');
 
 async function getBooks(req, res) {
   try {
-    const data = await bookService.searchBooks(req.query.q);
+    const data = await bookService.searchBooks(req.query);
     return res.json({ success: true, data });
   } catch (error) {
     return handleControllerError(res, error, 'Failed to fetch books');
