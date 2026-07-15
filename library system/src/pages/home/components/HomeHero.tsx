@@ -1,12 +1,15 @@
 import { ArrowDown, Books } from '@phosphor-icons/react'
-import { motion } from 'framer-motion'
+import { motion, type PanInfo } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useMotionPrefs } from '../../../lib/motion'
+import { scrollToElement, useMotionPrefs } from '../../../lib/motion'
 import { paths } from '../../../routes/paths'
 
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2400&q=80'
+
+const SWIPE_OFFSET = -72
+const SWIPE_VELOCITY = -450
 
 interface HomeHeroProps {
   catalogId?: string
@@ -19,18 +22,34 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
     fadeUpTransition,
     imageScale,
     imageTransition,
+    prefersReducedMotion,
   } = useMotionPrefs()
 
+  function goToCatalog() {
+    scrollToElement(catalogId, { reducedMotion: Boolean(prefersReducedMotion) })
+  }
+
+  function handleDragEnd(_: unknown, info: PanInfo) {
+    if (info.offset.y <= SWIPE_OFFSET || info.velocity.y <= SWIPE_VELOCITY) {
+      goToCatalog()
+    }
+  }
+
   return (
-    <section
-      className="relative isolate min-h-[min(88svh,52rem)] overflow-hidden"
+    <motion.section
+      className="relative isolate min-h-[min(88svh,52rem)] cursor-grab touch-pan-x overflow-hidden active:cursor-grabbing"
       aria-labelledby="home-hero-brand"
+      drag={prefersReducedMotion ? false : 'y'}
+      dragConstraints={{ top: 0, bottom: 0 }}
+      dragElastic={{ top: 0.35, bottom: 0.08 }}
+      onDragEnd={handleDragEnd}
     >
       <div className="absolute inset-0" aria-hidden>
         <motion.img
           src={HERO_IMAGE}
           alt=""
-          className="h-full w-full object-cover object-[center_35%]"
+          className="pointer-events-none h-full w-full object-cover object-[center_35%]"
+          draggable={false}
           variants={imageScale}
           initial="hidden"
           animate="visible"
@@ -40,7 +59,7 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
         <div className="absolute inset-0 bg-linear-to-r from-brand-dark/70 via-transparent to-transparent dark:from-page/80" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[min(88svh,52rem)] max-w-7xl flex-col justify-end px-4 pb-14 pt-20 sm:px-6 sm:pb-16 sm:pt-24 lg:justify-center lg:px-8 lg:pb-24 lg:pt-28">
+      <div className="relative z-10 mx-auto flex min-h-[min(88svh,52rem)] max-w-7xl flex-col justify-end px-4 pb-16 pt-20 sm:px-6 sm:pb-20 sm:pt-24 lg:justify-center lg:px-8 lg:pb-24 lg:pt-28">
         <div className="max-w-xl lg:max-w-2xl">
           <motion.p
             id="home-hero-brand"
@@ -79,14 +98,16 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
             initial="hidden"
             animate="visible"
             transition={fadeUpTransition(0.32)}
+            onPointerDownCapture={(event) => event.stopPropagation()}
           >
-            <a
-              href={`#${catalogId}`}
+            <button
+              type="button"
+              onClick={goToCatalog}
               className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-white transition duration-300 hover:bg-accent-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:text-page"
             >
               {t('home.hero.browseCta')}
               <ArrowDown size={16} weight="bold" aria-hidden />
-            </a>
+            </button>
             <Link
               to={paths.shelf}
               className="inline-flex items-center gap-2 rounded-xl bg-white/15 px-5 py-3 text-sm font-semibold text-white ring-1 ring-white/35 backdrop-blur-sm transition duration-300 hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:bg-surface/40 dark:text-ink dark:ring-border dark:hover:bg-surface/70"
@@ -98,7 +119,34 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
         </div>
       </div>
 
+      <motion.button
+        type="button"
+        onClick={goToCatalog}
+        className="absolute inset-x-0 bottom-4 z-10 mx-auto flex w-max flex-col items-center gap-1.5 text-white/75 transition hover:text-white dark:text-ink/70 dark:hover:text-ink"
+        aria-label={t('home.hero.swipeHint')}
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        transition={fadeUpTransition(0.42)}
+      >
+        <span className="text-xs font-semibold tracking-wide">
+          {t('home.hero.swipeHint')}
+        </span>
+        <motion.span
+          aria-hidden
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { y: [0, 6, 0], opacity: [0.55, 1, 0.55] }
+          }
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+          className="grid h-8 w-8 place-items-center rounded-full bg-white/10 ring-1 ring-white/25 dark:bg-surface/40 dark:ring-border"
+        >
+          <ArrowDown size={16} weight="bold" />
+        </motion.span>
+      </motion.button>
+
       <span className="sr-only">{t('home.hero.imageAlt')}</span>
-    </section>
+    </motion.section>
   )
 }

@@ -1,6 +1,30 @@
-import { useReducedMotion, type Transition } from 'framer-motion'
+import { animate, useReducedMotion, type Transition } from 'framer-motion'
 
 const easeOut = [0.22, 1, 0.36, 1] as const
+
+export function scrollToElement(
+  elementId: string,
+  options?: { offset?: number; duration?: number; reducedMotion?: boolean },
+) {
+  const element = document.getElementById(elementId)
+  if (!element) return
+
+  const offset = options?.offset ?? 96
+  const reducedMotion = options?.reducedMotion ?? false
+  const target =
+    element.getBoundingClientRect().top + window.scrollY - offset
+
+  if (reducedMotion) {
+    window.scrollTo({ top: target, behavior: 'auto' })
+    return
+  }
+
+  animate(window.scrollY, target, {
+    duration: options?.duration ?? 0.85,
+    ease: easeOut,
+    onUpdate: (value) => window.scrollTo(0, value),
+  })
+}
 
 export function useMotionPrefs() {
   const prefersReducedMotion = useReducedMotion()

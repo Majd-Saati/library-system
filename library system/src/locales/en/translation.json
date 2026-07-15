@@ -53,6 +53,7 @@
       "subtitle": "Search, borrow, and return titles from a quiet shelf built for curious readers.",
       "browseCta": "Browse the catalog",
       "shelfCta": "My shelf",
+      "swipeHint": "Swipe up for catalog",
       "imageAlt": "Sunlit library shelves filled with books"
     },
     "catalogTitle": "Catalog",

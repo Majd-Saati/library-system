@@ -1,4 +1,4 @@
-import { BookOpen, SignIn, SignOut } from '@phosphor-icons/react'
+import { BookOpen, Books, SignIn, SignOut } from '@phosphor-icons/react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -31,14 +31,6 @@ export function Layout() {
   const { data: loans = [] } = useLoansQuery()
   const loanCount = loans.length
 
-  const linkClass = ({ isActive }: { isActive: boolean }) =>
-    [
-      'relative rounded-xl px-3.5 py-2 text-sm font-semibold transition duration-200',
-      isActive
-        ? 'bg-brand text-white shadow-sm dark:text-page'
-        : 'text-ink/75 hover:bg-brand-light hover:text-brand',
-    ].join(' ')
-
   function handleLogout() {
     dispatch(logout())
     toast.success(t('login.toast.logout'))
@@ -59,7 +51,7 @@ export function Layout() {
       <header className="sticky top-0 z-20 border-b border-border/80 bg-surface/80 shadow-[0_1px_0_0_rgba(27,79,114,0.04)] backdrop-blur-xl">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-accent/40 to-transparent" />
 
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3.5 sm:gap-4 sm:px-6 lg:px-8">
           <Link
             to={paths.home}
             className="group flex min-w-0 items-center gap-3 transition"
@@ -75,30 +67,9 @@ export function Layout() {
             </span>
           </Link>
 
-          <nav
-            className="hidden items-center gap-1 rounded-2xl bg-brand-light/60 p-1 ring-1 ring-border/70 md:flex"
-            aria-label={t('app.navLabel')}
-          >
-            <NavLink to={paths.home} end className={linkClass}>
-              {t('app.home')}
-            </NavLink>
-            <NavLink to={paths.shelf} className={linkClass}>
-              <span className="inline-flex items-center gap-2">
-                {t('app.myShelf')}
-                {loanCount > 0 && (
-                  <span className="grid min-w-5 place-items-center rounded-full bg-accent px-1.5 py-0.5 text-[11px] font-bold leading-none text-white dark:text-page">
-                    {loanCount}
-                  </span>
-                )}
-              </span>
-            </NavLink>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <div className="hidden items-center gap-2 md:flex">
-              <ThemeSwitcher />
-              <LanguageSwitcher />
-            </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeSwitcher />
+            <LanguageSwitcher />
 
             {isAuthenticated && user ? (
               <HeaderDropdown
@@ -123,6 +94,17 @@ export function Layout() {
                   </p>
                   <p className="truncate text-xs text-muted">{user.email}</p>
                 </div>
+                <HeaderMenuItem onClick={() => navigate(paths.shelf)}>
+                  <Books size={16} weight="bold" aria-hidden />
+                  <span className="flex flex-1 items-center justify-between gap-3">
+                    {t('app.myShelf')}
+                    {loanCount > 0 ? (
+                      <span className="grid min-w-5 place-items-center rounded-md bg-accent px-1.5 py-0.5 text-[11px] font-bold leading-none text-white dark:text-page">
+                        {loanCount}
+                      </span>
+                    ) : null}
+                  </span>
+                </HeaderMenuItem>
                 <HeaderMenuItem danger onClick={handleLogout}>
                   <SignOut size={16} weight="bold" aria-hidden />
                   {t('app.logout')}
@@ -134,33 +116,9 @@ export function Layout() {
                 className="inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_-14px_rgba(196,122,44,0.9)] transition hover:bg-accent-dark dark:text-page"
               >
                 <SignIn size={16} weight="bold" aria-hidden />
-                {t('app.login')}
+                <span className="hidden sm:inline">{t('app.login')}</span>
               </NavLink>
             )}
-          </div>
-        </div>
-
-        <div className="border-t border-border/60 px-4 py-2 sm:px-6 md:hidden lg:px-8">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-2">
-            <nav className="flex items-center gap-1" aria-label={t('app.navLabel')}>
-              <NavLink to={paths.home} end className={linkClass}>
-                {t('app.home')}
-              </NavLink>
-              <NavLink to={paths.shelf} className={linkClass}>
-                <span className="inline-flex items-center gap-2">
-                  {t('app.myShelf')}
-                  {loanCount > 0 && (
-                    <span className="grid min-w-5 place-items-center rounded-full bg-accent px-1.5 py-0.5 text-[11px] font-bold leading-none text-white dark:text-page">
-                      {loanCount}
-                    </span>
-                  )}
-                </span>
-              </NavLink>
-            </nav>
-            <div className="flex items-center gap-2">
-              <ThemeSwitcher />
-              <LanguageSwitcher />
-            </div>
           </div>
         </div>
       </header>
