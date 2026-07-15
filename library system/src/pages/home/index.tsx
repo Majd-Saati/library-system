@@ -131,7 +131,7 @@ export function HomePage() {
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
-            key={`${filters.genre}-${filters.availability}-${filters.sort}-${deferredKey}`}
+            key={`${filters.genre}-${filters.availability}-${deferredKey}`}
           >
             {filteredBooks.map((book) => (
               <motion.div key={book.id} variants={staggerItem}>

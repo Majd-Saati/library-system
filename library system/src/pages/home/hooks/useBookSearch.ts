@@ -17,7 +17,6 @@ export function useBookSearch() {
     q: deferredQuery,
     genre: deferredFilters.genre,
     availability: deferredFilters.availability,
-    sort: deferredFilters.sort,
   })
 
   const books = booksQuery.data?.books ?? []
@@ -27,8 +26,7 @@ export function useBookSearch() {
   const filtersActive = hasActiveCatalogFilters(filters)
   const filtersPending =
     filters.genre !== deferredFilters.genre ||
-    filters.availability !== deferredFilters.availability ||
-    filters.sort !== deferredFilters.sort
+    filters.availability !== deferredFilters.availability
   const inputPending = query.trim() !== deferredQuery || filtersPending
 
   function clearQuery() {

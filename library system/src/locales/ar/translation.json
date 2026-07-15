@@ -86,11 +86,6 @@
     "allAvailability": "كل الكتب",
     "available": "المتاح فقط",
     "checkedOut": "المستعار فقط",
-    "sort": "ترتيب حسب",
-    "sortTitle": "العنوان أ–ي",
-    "sortAuthor": "المؤلف أ–ي",
-    "sortYearDesc": "الأحدث أولاً",
-    "sortYearAsc": "الأقدم أولاً",
     "clear": "إعادة تعيين الفلاتر"
   },
   "search": {

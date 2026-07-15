@@ -86,11 +86,6 @@
     "allAvailability": "All books",
     "available": "Available only",
     "checkedOut": "Checked out only",
-    "sort": "Sort by",
-    "sortTitle": "Title A–Z",
-    "sortAuthor": "Author A–Z",
-    "sortYearDesc": "Newest first",
-    "sortYearAsc": "Oldest first",
     "clear": "Reset filters"
   },
   "search": {

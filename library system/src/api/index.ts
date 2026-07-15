@@ -14,5 +14,4 @@ export type {
   BooksListParams,
   BooksListResult,
   BookAvailabilityFilter,
-  BookSortOption,
 } from './books.api'

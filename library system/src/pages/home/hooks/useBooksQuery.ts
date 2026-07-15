@@ -10,7 +10,6 @@ export function useBooksQuery(params: BooksListParams = {}) {
       params.availability && params.availability !== 'all'
         ? params.availability
         : undefined,
-    sort: params.sort && params.sort !== 'title' ? params.sort : undefined,
   }
 
   return useQuery({
@@ -18,7 +17,6 @@ export function useBooksQuery(params: BooksListParams = {}) {
       q: normalized.q ?? '',
       genre: params.genre ?? 'all',
       availability: params.availability ?? 'all',
-      sort: params.sort ?? 'title',
     }),
     queryFn: () => booksApi.getAll(normalized),
   })
