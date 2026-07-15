@@ -10,6 +10,7 @@ import {
   selectAuthUser,
   selectIsAuthenticated,
 } from '../store/slices/authSlice'
+import { Footer } from './Footer'
 import { HeaderDropdown, HeaderMenuItem } from './HeaderDropdown'
 import { LanguageSwitcher } from './LanguageSwitcher'
 import { ThemeSwitcher } from './ThemeSwitcher'
@@ -47,7 +48,7 @@ export function Layout() {
     : ''
 
   return (
-    <div className="min-h-svh bg-page text-ink">
+    <div className="flex min-h-svh flex-col bg-page text-ink">
       <header className="sticky top-0 z-20 border-b border-border/80 bg-surface/80 shadow-[0_1px_0_0_rgba(27,79,114,0.04)] backdrop-blur-xl">
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-accent/40 to-transparent" />
 
@@ -122,9 +123,10 @@ export function Layout() {
           </div>
         </div>
       </header>
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
+      <Footer />
     </div>
   )
 }

@@ -8,6 +8,15 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "footer": {
+    "blurb": "A quiet shelf for curious readers — search by title, author, or ISBN, then borrow and return with ease.",
+    "explore": "Explore",
+    "account": "Account",
+    "catalog": "Catalog",
+    "loans": "Active loans",
+    "copyright": "© {{year}} Library System",
+    "note": "Built for reading, borrowing, and discovery."
+  },
   "login": {
     "eyebrow": "Account",
     "title": "Log in to continue",
