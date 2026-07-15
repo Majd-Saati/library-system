@@ -25,6 +25,9 @@ const CheckoutPage = lazy(() =>
 const ReturnPage = lazy(() =>
   import('../pages/return').then((m) => ({ default: m.ReturnPage })),
 )
+const NotFoundPage = lazy(() =>
+  import('../pages/not-found').then((m) => ({ default: m.NotFoundPage })),
+)
 
 function LegacyBookRedirect() {
   const { bookId } = useParams<{ bookId: string }>()
@@ -74,7 +77,7 @@ const appRoutes = [
             element: <LegacyReturnRedirect />,
           },
 
-          { path: '*', element: <Navigate to={paths.home} replace /> },
+          { path: '*', element: <NotFoundPage /> },
         ],
       },
     ],

@@ -225,5 +225,12 @@
     "Literary": "Literary",
     "Epic": "Epic",
     "Horror": "Horror"
+  },
+  "notFound": {
+    "eyebrow": "Missing page",
+    "title": "This shelf is empty",
+    "subtitle": "The page you’re looking for doesn’t exist — or it may have been moved elsewhere in the library.",
+    "backHome": "Back to home",
+    "browseCatalog": "Browse catalog"
   }
 }
