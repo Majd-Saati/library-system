@@ -1,5 +1,10 @@
 import { ArrowDown, Books } from '@phosphor-icons/react'
-import { motion, type PanInfo } from 'framer-motion'
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type PanInfo,
+} from 'framer-motion'
 import { useCallback, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -21,13 +26,38 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
   const { t } = useTranslation()
   const heroRef = useRef<HTMLElement | null>(null)
   const navigatingRef = useRef(false)
-  const {
-    fadeUp,
-    fadeUpTransition,
-    imageScale,
-    imageTransition,
-    prefersReducedMotion,
-  } = useMotionPrefs()
+  const { fadeUp, fadeUpTransition, prefersReducedMotion } = useMotionPrefs()
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ['0%', '0%'] : ['0%', '28%'],
+  )
+  const imageScaleScroll = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [1.12, 1.12] : [1.12, 1.22],
+  )
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? ['0%', '0%'] : ['0%', '14%'],
+  )
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.55, 0.9],
+    prefersReducedMotion ? [1, 1, 1] : [1, 0.85, 0],
+  )
+  const overlayOpacity = useTransform(
+    scrollYProgress,
+    [0, 1],
+    prefersReducedMotion ? [0.35, 0.35] : [0.25, 0.55],
+  )
 
   const goToCatalog = useCallback(() => {
     if (navigatingRef.current) return
@@ -70,22 +100,29 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
       dragElastic={{ top: 0.35, bottom: 0.08 }}
       onDragEnd={handleDragEnd}
     >
-      <div className="absolute inset-0" aria-hidden>
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <motion.img
           src={HERO_IMAGE}
           alt=""
-          className="pointer-events-none h-full w-full object-cover object-[center_35%]"
+          className="pointer-events-none absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover object-[center_35%] will-change-transform"
           draggable={false}
-          variants={imageScale}
-          initial="hidden"
-          animate="visible"
-          transition={imageTransition}
+          style={{ y: imageY, scale: imageScaleScroll }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: prefersReducedMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
         />
         <div className="absolute inset-0 bg-linear-to-t from-brand-dark/95 via-brand-dark/55 to-brand-dark/25 dark:from-page/95 dark:via-page/70 dark:to-page/35" />
         <div className="absolute inset-0 bg-linear-to-r from-brand-dark/70 via-transparent to-transparent dark:from-page/80" />
+        <motion.div
+          className="absolute inset-0 bg-brand-dark dark:bg-page"
+          style={{ opacity: overlayOpacity }}
+        />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[min(88svh,52rem)] max-w-7xl flex-col justify-end px-4 pb-16 pt-20 sm:px-6 sm:pb-20 sm:pt-24 lg:justify-center lg:px-8 lg:pb-24 lg:pt-28">
+      <motion.div
+        className="relative z-10 mx-auto flex min-h-[min(88svh,52rem)] max-w-7xl flex-col justify-end px-4 pb-16 pt-20 sm:px-6 sm:pb-20 sm:pt-24 lg:justify-center lg:px-8 lg:pb-24 lg:pt-28"
+        style={{ y: contentY, opacity: contentOpacity }}
+      >
         <div className="max-w-xl lg:max-w-2xl">
           <motion.p
             id="home-hero-brand"
@@ -143,13 +180,14 @@ export function HomeHero({ catalogId = 'catalog' }: HomeHeroProps) {
             </Link>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       <motion.button
         type="button"
         onClick={goToCatalog}
         className="absolute inset-x-0 bottom-4 z-10 mx-auto flex w-max flex-col items-center gap-1.5 text-white/75 transition hover:text-white dark:text-ink/70 dark:hover:text-ink"
         aria-label={t('home.hero.swipeHint')}
+        style={{ opacity: contentOpacity }}
         variants={fadeUp}
         initial="hidden"
         animate="visible"
