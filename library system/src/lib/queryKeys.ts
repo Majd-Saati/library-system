@@ -1,6 +1,20 @@
 export const queryKeys = {
   books: {
-    all: (query = '') => ['books', query] as const,
+    all: (params: {
+      q?: string
+      genre?: string
+      availability?: string
+      sort?: string
+    } = {}) =>
+      [
+        'books',
+        {
+          q: params.q ?? '',
+          genre: params.genre ?? 'all',
+          availability: params.availability ?? 'all',
+          sort: params.sort ?? 'title',
+        },
+      ] as const,
     detail: (id: string) => ['books', 'detail', id] as const,
   },
   loans: {

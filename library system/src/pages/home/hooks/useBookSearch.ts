@@ -1,8 +1,6 @@
-import { useDeferredValue, useMemo, useState } from 'react'
+import { useDeferredValue, useState } from 'react'
 import {
-  applyCatalogFilters,
   defaultCatalogFilters,
-  extractGenres,
   hasActiveCatalogFilters,
   type CatalogFiltersState,
 } from '../lib/catalogFilters'
@@ -12,19 +10,26 @@ export function useBookSearch() {
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState<CatalogFiltersState>(defaultCatalogFilters)
   const deferredQuery = useDeferredValue(query.trim())
+  const deferredFilters = useDeferredValue(filters)
   const hasQuery = query.trim().length > 0
 
-  const booksQuery = useBooksQuery(deferredQuery)
-  const books = booksQuery.data ?? []
+  const booksQuery = useBooksQuery({
+    q: deferredQuery,
+    genre: deferredFilters.genre,
+    availability: deferredFilters.availability,
+    sort: deferredFilters.sort,
+  })
 
-  const genres = useMemo(() => extractGenres(booksQuery.data ?? []), [booksQuery.data])
-
-  const filteredBooks = useMemo(
-    () => applyCatalogFilters(books, filters),
-    [books, filters],
-  )
-
+  const books = booksQuery.data?.books ?? []
+  const genres = booksQuery.data?.genres ?? []
+  const resultCount = booksQuery.data?.count ?? books.length
+  const catalogCount = booksQuery.data?.total ?? books.length
   const filtersActive = hasActiveCatalogFilters(filters)
+  const filtersPending =
+    filters.genre !== deferredFilters.genre ||
+    filters.availability !== deferredFilters.availability ||
+    filters.sort !== deferredFilters.sort
+  const inputPending = query.trim() !== deferredQuery || filtersPending
 
   function clearQuery() {
     setQuery('')
@@ -46,19 +51,19 @@ export function useBookSearch() {
     setFilters,
     genres,
     suggestions: hasQuery ? books.slice(0, 8) : [],
-    filteredBooks,
+    filteredBooks: books,
     clearQuery,
     clearFilters,
     clearAll,
     hasQuery,
     filtersActive,
     isSearchLoading:
-      hasQuery && (booksQuery.isFetching || query.trim() !== deferredQuery),
-    isCatalogLoading: !hasQuery && booksQuery.isLoading,
+      (hasQuery || filtersActive) && (booksQuery.isFetching || inputPending),
+    isCatalogLoading: !hasQuery && !filtersActive && booksQuery.isLoading,
     isCatalogError: booksQuery.isError,
     catalogError: booksQuery.error,
     refetchCatalog: booksQuery.refetch,
-    resultCount: filteredBooks.length,
-    catalogCount: books.length,
+    resultCount,
+    catalogCount,
   }
 }

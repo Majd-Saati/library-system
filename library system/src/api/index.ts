@@ -9,4 +9,10 @@ export type {
   LoginPayload,
   LoginResult,
 } from './types'
-export type { CheckoutPayload } from './books.api'
+export type {
+  CheckoutPayload,
+  BooksListParams,
+  BooksListResult,
+  BookAvailabilityFilter,
+  BookSortOption,
+} from './books.api'

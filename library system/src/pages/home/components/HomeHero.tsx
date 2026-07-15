@@ -10,9 +10,8 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { scrollToElement, useMotionPrefs } from '../../../lib/motion'
 import { paths } from '../../../routes/paths'
+import HERO_IMAGE from '../../../assets/hero.avif'
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=2400&q=80'
 
 const SWIPE_OFFSET = -72
 const SWIPE_VELOCITY = -450

@@ -9,18 +9,48 @@ export interface CheckoutPayload {
   address: string
 }
 
-export const booksApi = {
-  getAll(query?: string) {
-    const trimmed = query?.trim()
-    const path = trimmed
-      ? `/books?${new URLSearchParams({ q: trimmed }).toString()}`
-      : '/books'
+export type BookAvailabilityFilter = 'all' | 'available' | 'checked_out'
+export type BookSortOption = 'title' | 'author' | 'year-desc' | 'year-asc'
 
-    return apiClient<
-      ApiSuccess<{ query: string | null; count: number; books: Book[] }>
-    >(path, {
+export interface BooksListParams {
+  q?: string
+  genre?: string
+  availability?: BookAvailabilityFilter
+  sort?: BookSortOption
+}
+
+export interface BooksListResult {
+  query: string | null
+  filters: {
+    genre: string
+    availability: BookAvailabilityFilter
+    sort: BookSortOption
+  }
+  count: number
+  total: number
+  genres: string[]
+  books: Book[]
+}
+
+function buildBooksQuery(params: BooksListParams = {}) {
+  const search = new URLSearchParams()
+  const q = params.q?.trim()
+  if (q) search.set('q', q)
+  if (params.genre && params.genre !== 'all') search.set('genre', params.genre)
+  if (params.availability && params.availability !== 'all') {
+    search.set('availability', params.availability)
+  }
+  if (params.sort && params.sort !== 'title') search.set('sort', params.sort)
+
+  const query = search.toString()
+  return query ? `/books?${query}` : '/books'
+}
+
+export const booksApi = {
+  getAll(params: BooksListParams = {}) {
+    return apiClient<ApiSuccess<BooksListResult>>(buildBooksQuery(params), {
       auth: false,
-    }).then((res) => res.data.books)
+    }).then((res) => res.data)
   },
 
   getById(id: string) {
